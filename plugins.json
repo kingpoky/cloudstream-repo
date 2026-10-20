@@ -129,28 +129,6 @@
     "jarHash": "sha256-106afec96bfa0f207993f077d2ee4fd46ebba7af98e8e7022da0a613da154acf"
   },
   {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KlikXXI.cs3",
-    "status": 1,
-    "version": 7,
-    "name": "KlikXXI",
-    "internalName": "KlikXXI",
-    "authors": [
-      "aldry84"
-    ],
-    "description": "request @ian_hiro",
-    "fileSize": 28808,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "AsianDrama",
-      "TvSeries",
-      "Movie"
-    ],
-    "iconUrl": "https://klikxxi.me/wp-content/uploads/2024/02/cropped-site-icon-60x60.png",
-    "apiVersion": 1,
-    "fileHash": "sha256-363197b8c788d050f36692626d2de20d71d9f9ce331401a2594cfef158385913"
-  },
-  {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/LayarKacaProvider.cs3",
     "status": 1,
     "version": 12,
@@ -316,27 +294,6 @@
     "iconUrl": "https://static.xhpingcdn.com/xh-mobile/images/favicon/favicon-v2-512x512.png?v=1",
     "apiVersion": 1,
     "fileHash": "sha256-2d807a7654d5704fe56b246c7dbbc0f19301d41f2fcaff1bb5f8f4284db7b448"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Indomax.cs3",
-    "status": 1,
-    "version": 1,
-    "name": "Indomax",
-    "internalName": "Indomax",
-    "description": "\ud83d\udcfa Streaming Movie and TV Series",
-    "authors": [
-      "Asm0d3usX"
-    ],
-    "fileSize": 20883,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "Movie",
-      "TvSeries"
-    ],
-    "iconUrl": "https://i.ibb.co.com/6cCQ1h87/indomax.jpg",
-    "apiVersion": 1,
-    "fileHash": "sha256-f5b4f2e370485114cf775a6e0a21de3f53d3a6d3d177457222194590c1c66d54"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuronimeProvider.cs3",
