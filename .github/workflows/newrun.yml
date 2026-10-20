@@ -16,6 +16,10 @@ permissions:
 env:
   REPO_NAME: KINGPOKY
   REPO_DESC: Nonton Gratis
+  # Modul biasa yang ikut dibangun dan diterbitkan. Tambahkan nama modul di sini
+  # setelah menaikkan `version` di <Modul>/build.gradle.kts. Kosongkan bila tidak
+  # ada modul biasa yang berubah; modul Adi dan Moviebox punya jalur sendiri.
+  PUBLISH_MODULES: NgeFilm
 
 jobs:
   build:
@@ -73,6 +77,9 @@ jobs:
           chmod +x gradlew
           ./gradlew :AdiDrakor:assembleRelease :AdiFilmSemi:assembleRelease :AdiXtream:assembleRelease :Adicinemax21:assembleRelease
           ./gradlew :Moviebox:assembleRelease
+          for module in $PUBLISH_MODULES; do
+            ./gradlew ":$module:assembleRelease"
+          done
           ./gradlew makePluginsJson
 
       - name: Retain released Adi publication inputs
@@ -91,6 +98,13 @@ jobs:
           cd "$GITHUB_WORKSPACE/src"
           python3 Moviebox/tests/distribution.py prepare "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
           python3 Moviebox/tests/verify_migration.py
+
+      - name: Publish ordinary modules and verify the complete release
+        if: env.PUBLISH_MODULES != ''
+        run: |
+          cd "$GITHUB_WORKSPACE/src"
+          python3 Moviebox/tests/distribution.py publish-extra "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
+          python3 AdiDrakor/tests/verify_artifacts.py "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/plugins-before.json"
 
       - name: Preserve repository identity
         run: |

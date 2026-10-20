@@ -22,6 +22,10 @@ ADI = {"AdiDrakor", "AdiFilmSemi", "AdiXtream", "Adicinemax21"}
 # Fork-aware: CI menyuplai GITHUB_REPOSITORY. Default tetap upstream agar
 # pemeriksaan ini tidak melemah saat dijalankan manual di luar Actions.
 REPOSITORY = os.environ.get("GITHUB_REPOSITORY") or "bikinveo-hash/RepairPremium_Repo"
+# Modul biasa (non-Adi, non-Moviebox) yang boleh berubah byte pada publikasi ini.
+# Kosong = guard tetap seketat semula; setiap modul di sini tetap wajib lulus
+# verify_package, kenaikan version, dan paritas hash terhadap hasil build.
+EXTRA = tuple(name for name in os.environ.get("PUBLISH_MODULES", "").split() if name)
 MOVIEBOX_CLASSES = {
     "Lcom/Moviebox/" + name + ";" for name in (
         "MovieBoxProvider", "MovieboxPlugin", "MovieboxPlayback",
@@ -111,12 +115,13 @@ def preserved(folder, state, allow_moviebox):
     before = catalog(state["catalog"])
     after = verify_catalog(folder)
     assert set(before) == set(after), "Catalog identities changed"
+    mutable = set(EXTRA) | ({"Moviebox"} if allow_moviebox else set())
     for name in before:
-        if name != "Moviebox" or not allow_moviebox:
+        if name not in mutable:
             assert before[name] == after[name], "Protected catalog entry changed: " + name
     files = inventory(folder)
     assert files.keys() == state["files"].keys(), "Published file inventory changed"
-    allowed = {"plugins.json"} | ({"Moviebox.cs3"} if allow_moviebox else set())
+    allowed = {"plugins.json"} | {name + ".cs3" for name in mutable}
     for path, digest in state["files"].items():
         if path not in allowed:
             assert files[path] == digest, "Protected published file changed: " + path
@@ -140,6 +145,47 @@ def retain_adi(folder, state):
         before[row["internalName"]] if row["internalName"] in ADI else row for row in generated
     ], indent=2) + "\n")
     print("PASS Adi publication inputs retained from released artifacts; source untouched")
+
+
+def publish_extra(folder, state):
+    """Terbitkan modul biasa di PUBLISH_MODULES dengan gate sekeras jalur Moviebox.
+
+    Dijalankan SETELAH tahap Moviebox. Basis katalog diambil dari plugins.json
+    yang sedang berada di distribusi, bukan dari snapshot awal, supaya publikasi
+    Moviebox pada run yang sama tidak terbalik.
+    """
+    assert EXTRA, "PUBLISH_MODULES kosong"
+    assert not (set(EXTRA) & (ADI | {"Moviebox"})), "Modul terlindungi tidak boleh lewat jalur ini"
+    before = catalog(state["catalog"])
+    current = catalog(json.loads((folder / "plugins.json").read_text()))
+    generated = catalog(json.loads((ROOT / "build/plugins.json").read_text()))
+    staged = []
+    for name in EXTRA:
+        row = generated[name]
+        source = ROOT / name / "build" / (name + ".cs3")
+        verify_package(source, row)
+        version = int(re.search(r"^version\s*=\s*(\d+)", (ROOT / name / "build.gradle.kts").read_text(), re.M)[1])
+        assert row["version"] == version, "Generated version differs from source: " + name
+        assert row["version"] >= before[name]["version"], "Version downgrade: " + name
+        if row["version"] == before[name]["version"]:
+            assert row["fileHash"] == before[name]["fileHash"], "Changed package needs a version increase: " + name
+        staged.append((name, row, source))
+    # Semua pemeriksaan selesai sebelum distribusi disentuh.
+    rows = {name: row for name, row, _ in staged}
+    for name, _, source in staged:
+        temporary = folder / (name + ".cs3.pending")
+        shutil.copyfile(source, temporary)
+        temporary.replace(folder / (name + ".cs3"))
+    temporary = folder / "plugins.json.pending"
+    temporary.write_text(json.dumps([rows.get(name, row) for name, row in current.items()], indent=2) + "\n")
+    temporary.replace(folder / "plugins.json")
+    after = verify_catalog(folder)
+    for name, row, source in staged:
+        assert after[name] == row, "Publication differs from generated metadata: " + name
+        assert sha256(folder / (name + ".cs3")) == sha256(source), "Published bytes differ from build: " + name
+    preserved(folder, state, allow_moviebox=True)
+    print("PASS published modules:", ", ".join(f"{n} v{r['version']}" for n, r, _ in staged))
+    print("PASS every other catalog entry and published byte unchanged")
 
 
 def prepare(folder, state):
@@ -182,7 +228,7 @@ def verify(folder, state):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["snapshot", "retain-adi", "prepare", "verify"])
+    parser.add_argument("command", choices=["snapshot", "retain-adi", "prepare", "verify", "publish-extra"])
     parser.add_argument("distribution", type=Path)
     parser.add_argument("state", type=Path)
     args = parser.parse_args()
@@ -190,7 +236,8 @@ def main():
         snapshot(args.distribution, args.state)
     else:
         state = json.loads(args.state.read_text())
-        {"retain-adi": retain_adi, "prepare": prepare, "verify": verify}[args.command](args.distribution, state)
+        {"retain-adi": retain_adi, "prepare": prepare, "verify": verify,
+         "publish-extra": publish_extra}[args.command](args.distribution, state)
 
 
 if __name__ == "__main__":
