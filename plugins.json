@@ -318,28 +318,6 @@
     "fileHash": "sha256-2d807a7654d5704fe56b246c7dbbc0f19301d41f2fcaff1bb5f8f4284db7b448"
   },
   {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Pencurimovie.cs3",
-    "status": 1,
-    "version": 1,
-    "name": "Pencurimovie",
-    "internalName": "Pencurimovie",
-    "description": "\ud83d\udcfa Streaming Movie and TV Series",
-    "authors": [
-      "Phisher98",
-      "Asm0d3usX"
-    ],
-    "fileSize": 16517,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "Movie",
-      "TvSeries"
-    ],
-    "iconUrl": "https://i.ibb.co.com/Y7dqMBrr/pencurimovie.png",
-    "apiVersion": 1,
-    "fileHash": "sha256-21060e44e73398f189700f39d02fe238228a7c678a5732fd6f0171cea5ddef87"
-  },
-  {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Indomax.cs3",
     "status": 1,
     "version": 1,
@@ -359,51 +337,6 @@
     "iconUrl": "https://i.ibb.co.com/6cCQ1h87/indomax.jpg",
     "apiVersion": 1,
     "fileHash": "sha256-f5b4f2e370485114cf775a6e0a21de3f53d3a6d3d177457222194590c1c66d54"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/JuraganFilm.cs3",
-    "status": 1,
-    "version": 19,
-    "name": "JuraganFilm",
-    "internalName": "JuraganFilm",
-    "authors": [
-      "sad25kag"
-    ],
-    "description": "JuraganFilm provider for tv45.juragan.film with HTML catalog parsing, search, detail metadata, episode parsing, direct MP4/HLS links, subtitles, and extractor fallback support.",
-    "fileSize": 60426,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "Movie",
-      "TvSeries",
-      "Anime",
-      "AsianDrama"
-    ],
-    "iconUrl": "https://www.google.com/s2/favicons?domain=tv45.juragan.film&sz=%size%",
-    "apiVersion": 1,
-    "fileHash": "sha256-4f294d9987c5f222c104518581209704a5bd7b0a29689f86bdc716c8f0354cd5"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KikoNime.cs3",
-    "status": 1,
-    "version": 4,
-    "name": "KikoNime",
-    "internalName": "KikoNime",
-    "authors": [
-      "sad25kag"
-    ],
-    "description": "Nonton donghua dan anime subtitle Indonesia dari KikoNime",
-    "fileSize": 41246,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "Anime",
-      "AnimeMovie",
-      "OVA"
-    ],
-    "iconUrl": "https://www.google.com/s2/favicons?domain=kikonime.com&sz=128",
-    "apiVersion": 1,
-    "fileHash": "sha256-02e7212169bd010b1d9fcb6c078b87b01218be8971c18b1b35a4566b9614eaac"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuronimeProvider.cs3",
