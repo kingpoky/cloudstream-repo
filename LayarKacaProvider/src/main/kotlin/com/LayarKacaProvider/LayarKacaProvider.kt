@@ -19,7 +19,7 @@ class LayarKacaProvider : MainAPI() {
         private const val PLAYBACK_UA = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36"
     }
 
-    override var mainUrl = "https://tv10.lk21official.cc"
+    override var mainUrl = "https://tv12.lk21official.cc"
     override var name = "LayarKaca21"
     override val hasMainPage = true
     override var lang = "id"

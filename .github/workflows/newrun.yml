@@ -19,7 +19,11 @@ env:
   # Modul biasa yang ikut dibangun dan diterbitkan. Tambahkan nama modul di sini
   # setelah menaikkan `version` di <Modul>/build.gradle.kts. Kosongkan bila tidak
   # ada modul biasa yang berubah; modul Adi dan Moviebox punya jalur sendiri.
-  PUBLISH_MODULES: NgeFilm
+  PUBLISH_MODULES: NgeFilm LayarKacaProvider IndoAsia
+  # Modul yang DIHAPUS dari katalog pada run ini. Isi hanya saat benar-benar
+  # mencabut plugin, lalu KOSONGKAN lagi setelah run berhasil — kalau dibiarkan
+  # terisi, run berikutnya akan gagal karena entri sudah tidak ada di katalog.
+  REMOVE_MODULES: Pornhub MissAv
 
 jobs:
   build:
@@ -70,6 +74,21 @@ jobs:
           python3 -m unittest discover -s Moviebox/tests/diagnostics -p 'test_*.py'
           python3 -m unittest discover -s Moviebox/tests -p 'test_distribution.py'
           python3 Moviebox/tests/distribution.py snapshot "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
+
+      - name: Remove retired modules from the catalog
+        if: env.REMOVE_MODULES != ''
+        run: |
+          cd "$GITHUB_WORKSPACE/src"
+          python3 Moviebox/tests/distribution.py remove-modules "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
+          python3 Moviebox/tests/distribution.py snapshot "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          removed = set(os.environ.get("REMOVE_MODULES", "").split())
+          rows = json.loads(Path(os.environ["RUNNER_TEMP"], "plugins-before.json").read_text())
+          Path(os.environ["RUNNER_TEMP"], "plugins-before.json").write_text(
+              json.dumps([r for r in rows if r["internalName"] not in removed], indent=2) + "\n")
+          PY
 
       - name: Compile Adi controls and standalone Moviebox
         run: |

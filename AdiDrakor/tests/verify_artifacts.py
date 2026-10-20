@@ -12,6 +12,8 @@ import zipfile
 # Fork-aware: CI menyuplai GITHUB_REPOSITORY. Default upstream agar pemeriksaan
 # tidak melemah saat skrip dijalankan manual di luar GitHub Actions.
 REPOSITORY = os.environ.get('GITHUB_REPOSITORY') or 'bikinveo-hash/RepairPremium_Repo'
+# Modul yang sengaja dihapus dari katalog pada publikasi ini (lihat REMOVE_MODULES).
+REMOVED = {name for name in os.environ.get('REMOVE_MODULES', '').split() if name}
 
 folder = Path(sys.argv[1])
 before = json.loads(Path(sys.argv[2]).read_text()) if len(sys.argv) > 2 else []
@@ -21,7 +23,7 @@ expected = {'AdiDrakor': 'com.AdiDrakor', 'AdiFilmSemi': 'com.michat88',
 old = {p['internalName']: p for p in before}
 migration = json.loads(Path(__file__).with_name('migration_manifest.json').read_text())
 assert len(after) == len({p['internalName'] for p in after}), 'Duplicate catalog names'
-assert set(old) == {p['internalName'] for p in after} if before else True, 'Catalog identities changed'
+assert set(old) - REMOVED == {p['internalName'] for p in after} if before else True, 'Catalog identities changed'
 
 
 def dex_classes(data):

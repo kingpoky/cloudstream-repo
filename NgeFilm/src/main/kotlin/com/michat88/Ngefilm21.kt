@@ -9,7 +9,7 @@ import javax.crypto.spec.SecretKeySpec
 import kotlinx.coroutines.coroutineScope
 
 class Ngefilm21 : MainAPI() {
-    override var mainUrl = "https://new32.ngefilm.site" 
+    override var mainUrl = "https://new39.ngefilm.site" 
     override var name = "Ngefilm21"
     override val hasMainPage = true
     override var lang = "id"

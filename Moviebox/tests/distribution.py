@@ -26,6 +26,9 @@ REPOSITORY = os.environ.get("GITHUB_REPOSITORY") or "bikinveo-hash/RepairPremium
 # Kosong = guard tetap seketat semula; setiap modul di sini tetap wajib lulus
 # verify_package, kenaikan version, dan paritas hash terhadap hasil build.
 EXTRA = tuple(name for name in os.environ.get("PUBLISH_MODULES", "").split() if name)
+# Modul yang sengaja DIHAPUS dari katalog pada publikasi ini. Kosong = guard
+# identitas katalog tetap seketat semula (tidak ada entri boleh hilang).
+REMOVED = tuple(name for name in os.environ.get("REMOVE_MODULES", "").split() if name)
 MOVIEBOX_CLASSES = {
     "Lcom/Moviebox/" + name + ";" for name in (
         "MovieBoxProvider", "MovieboxPlugin", "MovieboxPlayback",
@@ -114,16 +117,18 @@ def snapshot(folder, state_file):
 def preserved(folder, state, allow_moviebox):
     before = catalog(state["catalog"])
     after = verify_catalog(folder)
-    assert set(before) == set(after), "Catalog identities changed"
+    assert not (set(REMOVED) & (ADI | {"Moviebox"})), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
+    assert set(before) - set(REMOVED) == set(after), "Catalog identities changed"
     mutable = set(EXTRA) | ({"Moviebox"} if allow_moviebox else set())
     for name in before:
-        if name not in mutable:
+        if name not in mutable and name not in REMOVED:
             assert before[name] == after[name], "Protected catalog entry changed: " + name
     files = inventory(folder)
-    assert files.keys() == state["files"].keys(), "Published file inventory changed"
+    removed_files = {name + ".cs3" for name in REMOVED}
+    assert files.keys() == state["files"].keys() - removed_files, "Published file inventory changed"
     allowed = {"plugins.json"} | {name + ".cs3" for name in mutable}
     for path, digest in state["files"].items():
-        if path not in allowed:
+        if path not in allowed and path not in removed_files:
             assert files[path] == digest, "Protected published file changed: " + path
     return before, after
 
@@ -188,6 +193,31 @@ def publish_extra(folder, state):
     print("PASS every other catalog entry and published byte unchanged")
 
 
+def remove_modules(folder, state):
+    """Hapus modul di REMOVE_MODULES dari katalog dan distribusi.
+
+    Dijalankan SEBELUM tahap Adi/Moviebox supaya snapshot berikutnya konsisten.
+    Modul terlindungi tidak boleh lewat sini.
+    """
+    assert REMOVED, "REMOVE_MODULES kosong"
+    assert not (set(REMOVED) & (ADI | {"Moviebox"})), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
+    before = catalog(state["catalog"])
+    assert set(REMOVED) <= set(before), "REMOVE_MODULES menyebut entri yang tidak ada di katalog"
+    for name in REMOVED:
+        assert not (ROOT / name).exists(), "Source modul masih ada, hapus dari repo dulu: " + name
+    rows = [row for row in state["catalog"] if row["internalName"] not in REMOVED]
+    temporary = folder / "plugins.json.pending"
+    temporary.write_text(json.dumps(rows, indent=2) + "\n")
+    temporary.replace(folder / "plugins.json")
+    for name in REMOVED:
+        target = folder / (name + ".cs3")
+        if target.exists():
+            target.unlink()
+    preserved(folder, state, allow_moviebox=False)
+    print("PASS removed from catalog:", ", ".join(sorted(REMOVED)))
+    print("PASS remaining entries:", len(rows))
+
+
 def prepare(folder, state):
     before, _ = preserved(folder, state, allow_moviebox=False)
     generated = catalog(json.loads((ROOT / "build/plugins.json").read_text()))
@@ -228,7 +258,8 @@ def verify(folder, state):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["snapshot", "retain-adi", "prepare", "verify", "publish-extra"])
+    parser.add_argument("command", choices=["snapshot", "retain-adi", "prepare", "verify",
+                                            "publish-extra", "remove-modules"])
     parser.add_argument("distribution", type=Path)
     parser.add_argument("state", type=Path)
     args = parser.parse_args()
@@ -237,7 +268,8 @@ def main():
     else:
         state = json.loads(args.state.read_text())
         {"retain-adi": retain_adi, "prepare": prepare, "verify": verify,
-         "publish-extra": publish_extra}[args.command](args.distribution, state)
+         "publish-extra": publish_extra,
+         "remove-modules": remove_modules}[args.command](args.distribution, state)
 
 
 if __name__ == "__main__":
