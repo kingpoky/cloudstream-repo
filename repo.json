@@ -1,9 +1,9 @@
 {
-    "name": "Freemium_Repo",
-    "iconUrl": "https://raw.githubusercontent.com/michat88/Zaneta/main/Icons/Adi.png",
-    "description": "Repository Plugin Michat88",
+    "name": "KINGPOKY",
+    "iconUrl": "https://repo.kingpoky.my.id/cloudstream/icon.png",
+    "description": "Nonton Gratis",
     "manifestVersion": 1,
     "pluginLists": [
-      "https://raw.githubusercontent.com/bikinveo-hash/RepairPremium_Repo/builds/plugins.json"
+        "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/plugins.json"
     ]
 }
