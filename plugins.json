@@ -406,27 +406,6 @@
     "fileHash": "sha256-02e7212169bd010b1d9fcb6c078b87b01218be8971c18b1b35a4566b9614eaac"
   },
   {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuramanimeProvider.cs3",
-    "status": 1,
-    "version": 50,
-    "name": "KuramanimeProvider",
-    "internalName": "KuramanimeProvider",
-    "authors": [
-      "sad25kag"
-    ],
-    "fileSize": 33929,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "AnimeMovie",
-      "Anime",
-      "OVA"
-    ],
-    "iconUrl": "https://www.google.com/s2/favicons?domain=kuramanime.com&sz=%size%",
-    "apiVersion": 1,
-    "fileHash": "sha256-949218cd4f1c1f0e51c1ea8d09cd1aefe07f031a56500b9c3fdd0d50b236f418"
-  },
-  {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuronimeProvider.cs3",
     "status": 1,
     "version": 3,
