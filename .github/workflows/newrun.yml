@@ -18,12 +18,12 @@ env:
   REPO_DESC: Nonton Gratis
   # Modul biasa yang ikut dibangun dan diterbitkan. Tambahkan nama modul di sini
   # setelah menaikkan `version` di <Modul>/build.gradle.kts. Kosongkan bila tidak
-  # ada modul biasa yang berubah; modul Adi dan Moviebox punya jalur sendiri.
+  # ada modul biasa yang berubah; Moviebox punya jalur sendiri.
   PUBLISH_MODULES: ""
   # Modul yang DIHAPUS dari katalog pada run ini. Isi hanya saat benar-benar
   # mencabut plugin, lalu KOSONGKAN lagi setelah run berhasil — kalau dibiarkan
   # terisi, run berikutnya gagal karena entri sudah tidak ada di katalog.
-  REMOVE_MODULES: ""
+  REMOVE_MODULES: "AdiDrakor AdiFilmSemi AdiXtream Adicinemax21"
 
 jobs:
   build:
@@ -45,7 +45,6 @@ jobs:
           git ls-remote --exit-code --heads origin builds >/dev/null
           git fetch origin builds
           git checkout --detach FETCH_HEAD
-          cp plugins.json "$RUNNER_TEMP/plugins-before.json"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -61,12 +60,7 @@ jobs:
       - name: Create local.properties
         run: touch "$GITHUB_WORKSPACE/src/local.properties"
 
-      - name: Verify source parity and isolated playback regressions
-        run: |
-          cd "$GITHUB_WORKSPACE/src"
-          python3 AdiDrakor/tests/run_migration.py
-
-      - name: Verify standalone Moviebox and protected Adi bytes
+      - name: Verify Moviebox source parity and playback regressions
         run: |
           cd "$GITHUB_WORKSPACE/src"
           python3 Moviebox/tests/verify_migration.py
@@ -81,36 +75,16 @@ jobs:
           cd "$GITHUB_WORKSPACE/src"
           python3 Moviebox/tests/distribution.py remove-modules "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
           python3 Moviebox/tests/distribution.py snapshot "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
-          python3 - <<'PY'
-          import json, os
-          from pathlib import Path
-          removed = set(os.environ.get("REMOVE_MODULES", "").split())
-          rows = json.loads(Path(os.environ["RUNNER_TEMP"], "plugins-before.json").read_text())
-          Path(os.environ["RUNNER_TEMP"], "plugins-before.json").write_text(
-              json.dumps([r for r in rows if r["internalName"] not in removed], indent=2) + "\n")
-          PY
 
-      - name: Compile Adi controls and standalone Moviebox
+      - name: Compile Moviebox and the modules being published
         run: |
           cd "$GITHUB_WORKSPACE/src"
           chmod +x gradlew
-          ./gradlew :AdiDrakor:assembleRelease :AdiFilmSemi:assembleRelease :AdiXtream:assembleRelease :Adicinemax21:assembleRelease
           ./gradlew :Moviebox:assembleRelease
           for module in $PUBLISH_MODULES; do
             ./gradlew ":$module:assembleRelease"
           done
           ./gradlew makePluginsJson
-
-      - name: Retain released Adi publication inputs
-        run: |
-          cd "$GITHUB_WORKSPACE/src"
-          python3 Moviebox/tests/distribution.py retain-adi "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
-
-      - name: Stage Adi only and verify every catalog artifact
-        run: |
-          cd "$GITHUB_WORKSPACE/src"
-          python3 AdiDrakor/tests/prepare_distribution.py "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/plugins-before.json"
-          python3 AdiDrakor/tests/verify_artifacts.py "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/plugins-before.json"
 
       - name: Stage only Moviebox and verify the complete release
         run: |

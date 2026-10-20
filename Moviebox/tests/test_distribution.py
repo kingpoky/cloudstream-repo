@@ -57,7 +57,7 @@ class DistributionTests(unittest.TestCase):
         self.folder = self.root / "published"
         self.folder.mkdir()
         self.before = [artifact(self.folder / (name + ".cs3"), name, 12)
-            for name in sorted(release.ADI | {"Moviebox", "Other"})]
+            for name in sorted({"Moviebox", "Other", "Extra"})]
         (self.folder / "plugins.json").write_text(json.dumps(self.before))
         (self.folder / "repo.json").write_text('{"unchanged":true}')
         self.state = {"catalog": copy.deepcopy(self.before), "files": release.inventory(self.folder)}
@@ -143,19 +143,24 @@ class DistributionTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "version increase"):
                 release.prepare(self.folder, self.state)
 
-    def test_retain_adi_uses_released_bytes_without_source_changes(self):
-        compiled = copy.deepcopy(self.generated)
-        for name in release.ADI:
-            output = self.root / name / "build" / (name + ".cs3")
-            output.parent.mkdir(parents=True)
-            row = artifact(output, name, 13)
-            compiled = [row if item["internalName"] == name else item for item in compiled]
-            (self.root / name / "source.kt").write_text("unchanged source")
-        (self.root / "build/plugins.json").write_text(json.dumps(compiled))
-        release.retain_adi(self.folder, self.state)
-        for name in release.ADI:
-            self.assertEqual((self.root / name / "build" / (name + ".cs3")).read_bytes(), (self.folder / (name + ".cs3")).read_bytes())
-            self.assertEqual((self.root / name / "source.kt").read_text(), "unchanged source")
+    def test_remove_modules_drops_entry_and_artifact(self):
+        with patch.object(release, "REMOVED", ("Other",)):
+            release.remove_modules(self.folder, self.state)
+        rows = json.loads((self.folder / "plugins.json").read_text())
+        self.assertEqual({row["internalName"] for row in rows}, {"Moviebox", "Extra"})
+        self.assertFalse((self.folder / "Other.cs3").exists())
+        self.assertTrue((self.folder / "Moviebox.cs3").exists())
+
+    def test_remove_modules_refuses_protected(self):
+        with patch.object(release, "REMOVED", ("Moviebox",)):
+            with self.assertRaisesRegex(AssertionError, "terlindungi"):
+                release.remove_modules(self.folder, self.state)
+
+    def test_remove_modules_refuses_when_source_still_present(self):
+        (self.root / "Other").mkdir()
+        with patch.object(release, "REMOVED", ("Other",)):
+            with self.assertRaisesRegex(AssertionError, "Source modul masih ada"):
+                release.remove_modules(self.folder, self.state)
 
 
 if __name__ == "__main__":

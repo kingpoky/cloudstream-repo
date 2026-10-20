@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Publish standalone Moviebox while preserving every other released file and entry.
+"""Publish Moviebox and ordinary modules while preserving every other released file and entry.
 
-The existing Adi staging/verification scripts remain unchanged. retain-adi supplies
-their publication inputs from the release, after compilation has already succeeded.
-Only ignored build outputs are written; no Adi source/test/configuration is touched.
+Perintah: snapshot, prepare (Moviebox), publish-extra (PUBLISH_MODULES),
+remove-modules (REMOVE_MODULES), verify. Moviebox dilindungi dari jalur
+modul biasa. Jalur retain-adi dihapus bersama modul Adi pada 20/10/2026.
 """
 import argparse
 import hashlib
@@ -18,7 +18,8 @@ import zlib
 import os
 
 ROOT = Path(__file__).resolve().parents[2]
-ADI = {"AdiDrakor", "AdiFilmSemi", "AdiXtream", "Adicinemax21"}
+# Modul yang tidak boleh diterbitkan/dihapus lewat jalur modul biasa.
+PROTECTED = {"Moviebox"}
 # Fork-aware: CI menyuplai GITHUB_REPOSITORY. Default tetap upstream agar
 # pemeriksaan ini tidak melemah saat dijalankan manual di luar Actions.
 REPOSITORY = os.environ.get("GITHUB_REPOSITORY") or "bikinveo-hash/RepairPremium_Repo"
@@ -109,7 +110,7 @@ def verify_catalog(folder):
 
 def snapshot(folder, state_file):
     rows = verify_catalog(folder)
-    assert ADI | {"Moviebox"} <= set(rows), "Missing protected catalog entries"
+    assert PROTECTED <= set(rows), "Missing protected catalog entries"
     state_file.write_text(json.dumps({"catalog": list(rows.values()), "files": inventory(folder)}, indent=2) + "\n")
     print("PASS publication baseline:", len(rows), "plugins")
 
@@ -117,7 +118,7 @@ def snapshot(folder, state_file):
 def preserved(folder, state, allow_moviebox):
     before = catalog(state["catalog"])
     after = verify_catalog(folder)
-    assert not (set(REMOVED) & (ADI | {"Moviebox"})), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
+    assert not (set(REMOVED) & PROTECTED), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
     assert set(before) - set(REMOVED) == set(after), "Catalog identities changed"
     mutable = set(EXTRA) | ({"Moviebox"} if allow_moviebox else set())
     for name in before:
@@ -133,25 +134,6 @@ def preserved(folder, state, allow_moviebox):
     return before, after
 
 
-def retain_adi(folder, state):
-    before, _ = preserved(folder, state, allow_moviebox=False)
-    generated_file = ROOT / "build/plugins.json"
-    generated = json.loads(generated_file.read_text())
-    compiled = catalog(generated)
-    assert ADI <= set(compiled), "Missing compiled Adi metadata"
-    for name in sorted(ADI):
-        output = ROOT / name / "build" / (name + ".cs3")
-        assert output.is_file(), "Adi compilation output missing: " + name
-        verify_package(output, compiled[name])
-        # Compilation is a control only. Reuse the released bytes for the unchanged
-        # Adi publication stage, regardless of compiler/archive nondeterminism.
-        shutil.copyfile(folder / output.name, output)
-    generated_file.write_text(json.dumps([
-        before[row["internalName"]] if row["internalName"] in ADI else row for row in generated
-    ], indent=2) + "\n")
-    print("PASS Adi publication inputs retained from released artifacts; source untouched")
-
-
 def publish_extra(folder, state):
     """Terbitkan modul biasa di PUBLISH_MODULES dengan gate sekeras jalur Moviebox.
 
@@ -160,7 +142,7 @@ def publish_extra(folder, state):
     Moviebox pada run yang sama tidak terbalik.
     """
     assert EXTRA, "PUBLISH_MODULES kosong"
-    assert not (set(EXTRA) & (ADI | {"Moviebox"})), "Modul terlindungi tidak boleh lewat jalur ini"
+    assert not (set(EXTRA) & PROTECTED), "Modul terlindungi tidak boleh lewat jalur ini"
     before = catalog(state["catalog"])
     current = catalog(json.loads((folder / "plugins.json").read_text()))
     generated = catalog(json.loads((ROOT / "build/plugins.json").read_text()))
@@ -200,7 +182,7 @@ def remove_modules(folder, state):
     Modul terlindungi tidak boleh lewat sini.
     """
     assert REMOVED, "REMOVE_MODULES kosong"
-    assert not (set(REMOVED) & (ADI | {"Moviebox"})), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
+    assert not (set(REMOVED) & PROTECTED), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
     before = catalog(state["catalog"])
     assert set(REMOVED) <= set(before), "REMOVE_MODULES menyebut entri yang tidak ada di katalog"
     for name in REMOVED:
@@ -253,12 +235,12 @@ def verify(folder, state):
     assert row == generated, "Moviebox publication differs from generated metadata"
     assert sha256(folder / "Moviebox.cs3") == sha256(ROOT / "Moviebox/build/Moviebox.cs3"), "Published Moviebox differs from build"
     print("PASS final catalog:", len(after), "plugins; Moviebox version", row["version"])
-    print("PASS Adi artifact hash parity; all non-Moviebox entries and published bytes unchanged")
+    print("PASS all non-Moviebox entries and published bytes unchanged")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["snapshot", "retain-adi", "prepare", "verify",
+    parser.add_argument("command", choices=["snapshot", "prepare", "verify",
                                             "publish-extra", "remove-modules"])
     parser.add_argument("distribution", type=Path)
     parser.add_argument("state", type=Path)
@@ -267,7 +249,7 @@ def main():
         snapshot(args.distribution, args.state)
     else:
         state = json.loads(args.state.read_text())
-        {"retain-adi": retain_adi, "prepare": prepare, "verify": verify,
+        {"prepare": prepare, "verify": verify,
          "publish-extra": publish_extra,
          "remove-modules": remove_modules}[args.command](args.distribution, state)
 
