@@ -23,7 +23,7 @@ env:
   # Modul yang DIHAPUS dari katalog pada run ini. Isi hanya saat benar-benar
   # mencabut plugin, lalu KOSONGKAN lagi setelah run berhasil — kalau dibiarkan
   # terisi, run berikutnya gagal karena entri sudah tidak ada di katalog.
-  REMOVE_MODULES: "AdiDrakor AdiFilmSemi AdiXtream Adicinemax21"
+  REMOVE_MODULES: ""
 
 jobs:
   build:
