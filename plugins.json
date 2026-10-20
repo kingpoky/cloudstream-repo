@@ -382,5 +382,92 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=tv45.juragan.film&sz=%size%",
     "apiVersion": 1,
     "fileHash": "sha256-4f294d9987c5f222c104518581209704a5bd7b0a29689f86bdc716c8f0354cd5"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KikoNime.cs3",
+    "status": 1,
+    "version": 4,
+    "name": "KikoNime",
+    "internalName": "KikoNime",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Nonton donghua dan anime subtitle Indonesia dari KikoNime",
+    "fileSize": 41246,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=kikonime.com&sz=128",
+    "apiVersion": 1,
+    "fileHash": "sha256-02e7212169bd010b1d9fcb6c078b87b01218be8971c18b1b35a4566b9614eaac"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuramanimeProvider.cs3",
+    "status": 1,
+    "version": 50,
+    "name": "KuramanimeProvider",
+    "internalName": "KuramanimeProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "fileSize": 33929,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime",
+      "OVA"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=kuramanime.com&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-949218cd4f1c1f0e51c1ea8d09cd1aefe07f031a56500b9c3fdd0d50b236f418"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuronimeProvider.cs3",
+    "status": 1,
+    "version": 3,
+    "name": "KuronimeProvider",
+    "internalName": "KuronimeProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Kuronime \u2014 Streaming Anime Subtitle Indonesia",
+    "fileSize": 39462,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime",
+      "OVA"
+    ],
+    "iconUrl": "https://play-lh.googleusercontent.com/EFMkS1T-8txjLFIl9QxjcTRLa7a7Muv08C04b7ongYgodoY_b2T3GpxzGAQEx-eitfQ=w256",
+    "apiVersion": 1,
+    "fileHash": "sha256-3dd02365736fe45b72cdce98bd165129c97c71f0b29df8135c675bfcd784d98b"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/OtakudesuProvider.cs3",
+    "status": 1,
+    "version": 14,
+    "name": "OtakudesuProvider",
+    "internalName": "OtakudesuProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Otakudesu provider with source-backed homepage categories and genre rows from the current Otakudesu site.",
+    "fileSize": 27885,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=otakudesu.blog&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-15fd2b6a132edf0122c18283b3d1fc5991581c01f3a5282203269bbfa0f42518"
   }
 ]
