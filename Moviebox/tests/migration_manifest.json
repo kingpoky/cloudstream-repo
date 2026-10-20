@@ -73,7 +73,7 @@
     "AdiDrakor/tests/upstream/Moviebox/tests/shims/TestApp.kt": "af203329d8d36f817d2630070916ab2d7c9b631a55821751938838be43951c8c",
     "AdiDrakor/tests/upstream/Moviebox/tests/shims/TestBuild.kt": "d7bac7569c024a054de610685add7751463804a2c308baae66812159bc7be36e",
     "AdiDrakor/tests/upstream/Moviebox/tests/shims/TestLinkBuilder.kt": "d4fb582fca5b7f61f9e92131a0ab504b368b881ceba6a4b2f59ca9eb67b483ac",
-    "AdiDrakor/tests/verify_artifacts.py": "8c67b813ac6fc11f30fad7e88d56d0526d6d8f627ebe2deae13bb89ec17a10c0",
+    "AdiDrakor/tests/verify_artifacts.py": "2f57e39870e10238acae8ff549652ddce7349835c3258e8e4d29d0ce11573873",
     "AdiDrakor/tests/verify_integrity.py": "8a0f0ddfccd6e319a872b67a1703f598ff7923b26b390ea37d907f9e590cbfbb",
     "AdiFilmSemi/build.gradle.kts": "57e926acb8fa612903037a3039fdea0553090550c1709f1393023af2043929b6",
     "AdiFilmSemi/src/main/AndroidManifest.xml": "7c2bf986773298efe1557909b60aaff378a2e64b4ad504cf9a52c71819a28168",
