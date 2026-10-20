@@ -14,8 +14,8 @@ permissions:
   contents: write
 
 env:
-  REPO_NAME: Freemium_Repo
-  REPO_DESC: Repository Plugin Michat88
+  REPO_NAME: KINGPOKY
+  REPO_DESC: Nonton Gratis
 
 jobs:
   build:
@@ -99,7 +99,7 @@ jobs:
             cat > repo.json << EOF_REPO
           {
             "name": "$REPO_NAME",
-            "iconUrl": "https://raw.githubusercontent.com/michat88/Zaneta/main/Icons/Adi.png",
+            "iconUrl": "https://repo.kingpoky.my.id/cloudstream/icon.png",
             "description": "$REPO_DESC",
             "manifestVersion": 1,
             "pluginLists": ["https://raw.githubusercontent.com/$GITHUB_REPOSITORY/builds/plugins.json"]

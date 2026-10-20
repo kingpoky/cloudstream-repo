@@ -60,7 +60,7 @@ subprojects {
     cloudstream {
         setRepo(
             System.getenv("GITHUB_REPOSITORY")
-                ?: "https://github.com/bikinveo-hash/RepairPremium_Repo"
+                ?: "https://github.com/kingpoky/cloudstream-repo"
         )
 
         authors = listOf("trinityzanetamanu")

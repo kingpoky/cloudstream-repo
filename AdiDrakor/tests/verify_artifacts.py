@@ -2,11 +2,16 @@
 """Verify every catalog artifact and preserve non-Adi metadata and bytes exactly."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import struct
 import sys
 import zipfile
+
+# Fork-aware: CI menyuplai GITHUB_REPOSITORY. Default upstream agar pemeriksaan
+# tidak melemah saat skrip dijalankan manual di luar GitHub Actions.
+REPOSITORY = os.environ.get('GITHUB_REPOSITORY') or 'bikinveo-hash/RepairPremium_Repo'
 
 folder = Path(sys.argv[1])
 before = json.loads(Path(sys.argv[2]).read_text()) if len(sys.argv) > 2 else []
@@ -55,7 +60,7 @@ for item in after:
             assert item['version'] >= old[name]['version'], 'Published version downgrade: ' + name
             if item['version'] == old[name]['version']:
                 assert item['fileHash'] == old[name]['fileHash'], 'Changed package needs a version increase: ' + name
-            assert item['url'] == f'https://raw.githubusercontent.com/bikinveo-hash/RepairPremium_Repo/builds/{name}.cs3'
+            assert item['url'] == f'https://raw.githubusercontent.com/{REPOSITORY}/builds/{name}.cs3'
             classes = dex_classes(dex)
             assert len(classes) == len(set(classes)), 'Duplicate DEX class'
             entry = 'L' + plugin.replace('.', '/') + ';'

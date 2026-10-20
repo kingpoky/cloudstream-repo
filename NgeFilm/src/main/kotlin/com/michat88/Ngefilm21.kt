@@ -164,6 +164,13 @@ class Ngefilm21 : MainAPI() {
                         
                         extractHanerix(directUrl, realDomain, callback)
                     }
+                    // [1.6] KELUARGA VIDHIDE DENGAN HOST BERGANTI-GANTI (mis. morencius).
+                    // Berbeda dari [1]/[1.5]: host TIDAK ditulis ulang, karena video ID
+                    // hanya valid pada host asalnya. Mesin embed/unpacker-nya sama.
+                    else if (targetUrl.contains(Regex("""(?i)morencius"""))) {
+                        val realDomain = targetUrl.substringAfter("://").substringBefore("/")
+                        extractHanerix(targetUrl, realDomain, callback)
+                    }
                 }
 
                 // [2] DETEKSI RPM LIVE & P2PPLAY

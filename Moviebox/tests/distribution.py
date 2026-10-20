@@ -15,9 +15,13 @@ import struct
 import zipfile
 import zlib
 
+import os
+
 ROOT = Path(__file__).resolve().parents[2]
 ADI = {"AdiDrakor", "AdiFilmSemi", "AdiXtream", "Adicinemax21"}
-REPOSITORY = "bikinveo-hash/RepairPremium_Repo"
+# Fork-aware: CI menyuplai GITHUB_REPOSITORY. Default tetap upstream agar
+# pemeriksaan ini tidak melemah saat dijalankan manual di luar Actions.
+REPOSITORY = os.environ.get("GITHUB_REPOSITORY") or "bikinveo-hash/RepairPremium_Repo"
 MOVIEBOX_CLASSES = {
     "Lcom/Moviebox/" + name + ";" for name in (
         "MovieBoxProvider", "MovieboxPlugin", "MovieboxPlayback",
