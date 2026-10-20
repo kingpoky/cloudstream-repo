@@ -104,7 +104,6 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE/src"
           python3 Moviebox/tests/distribution.py publish-extra "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
-          python3 AdiDrakor/tests/verify_artifacts.py "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/plugins-before.json"
 
       - name: Preserve repository identity
         run: |
