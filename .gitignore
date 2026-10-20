@@ -15,6 +15,3 @@ local.properties
 .kotlin/
 __pycache__/
 *.py[cod]
-
-# workflows dipasang terpisah (token tanpa scope workflow)
-.github/
