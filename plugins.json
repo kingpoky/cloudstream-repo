@@ -316,5 +316,376 @@
     "iconUrl": "https://static.xhpingcdn.com/xh-mobile/images/favicon/favicon-v2-512x512.png?v=1",
     "apiVersion": 1,
     "fileHash": "sha256-2d807a7654d5704fe56b246c7dbbc0f19301d41f2fcaff1bb5f8f4284db7b448"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Pencurimovie.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Pencurimovie",
+    "internalName": "Pencurimovie",
+    "description": "\ud83d\udcfa Streaming Movie and TV Series",
+    "authors": [
+      "Phisher98",
+      "Asm0d3usX"
+    ],
+    "fileSize": 16517,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "iconUrl": "https://i.ibb.co.com/Y7dqMBrr/pencurimovie.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-21060e44e73398f189700f39d02fe238228a7c678a5732fd6f0171cea5ddef87"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Indomax.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Indomax",
+    "internalName": "Indomax",
+    "description": "\ud83d\udcfa Streaming Movie and TV Series",
+    "authors": [
+      "Asm0d3usX"
+    ],
+    "fileSize": 20883,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "iconUrl": "https://i.ibb.co.com/6cCQ1h87/indomax.jpg",
+    "apiVersion": 1,
+    "fileHash": "sha256-f5b4f2e370485114cf775a6e0a21de3f53d3a6d3d177457222194590c1c66d54"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/JuraganFilm.cs3",
+    "status": 1,
+    "version": 19,
+    "name": "JuraganFilm",
+    "internalName": "JuraganFilm",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "JuraganFilm provider for tv45.juragan.film with HTML catalog parsing, search, detail metadata, episode parsing, direct MP4/HLS links, subtitles, and extractor fallback support.",
+    "fileSize": 60426,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Movie",
+      "TvSeries",
+      "Anime",
+      "AsianDrama"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=tv45.juragan.film&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-4f294d9987c5f222c104518581209704a5bd7b0a29689f86bdc716c8f0354cd5"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Alqanime.cs3",
+    "status": 1,
+    "version": 31,
+    "name": "Alqanime",
+    "internalName": "Alqanime",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Nonton & Download Anime Subtitle Indonesia",
+    "fileSize": 73264,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "OVA",
+      "Anime"
+    ],
+    "iconUrl": "https://cloudstream.zvlz.my.id/icon/alqanime.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-9eb1014f29387d50b375ed813f13e3d0eee671fbde9b5fbba556768f1c2ba42d"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/AnimeIndo.cs3",
+    "status": 1,
+    "version": 25,
+    "name": "AnimeIndo",
+    "internalName": "AnimeIndo",
+    "authors": [
+      "sad25kag"
+    ],
+    "fileSize": 63521,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "OVA",
+      "Anime",
+      "Movie"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=https://anime-indo.lol&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-5cbcc9352444c7b6b0aeef6a899a072046feeb2339064a18fa1691de0a15f331"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Animekhor.cs3",
+    "status": 1,
+    "version": 13,
+    "name": "Animekhor",
+    "internalName": "Animekhor",
+    "authors": [
+      "Phisher98"
+    ],
+    "description": "Anime and Movies includes (Donghuaword)",
+    "fileSize": 50899,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "zh",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=animekhor.org&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-5822fff54a3d61af1013ccd5271f929a3d4f663ec7ff35e41f671c3102c1f25a"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Astronime.cs3",
+    "status": 1,
+    "version": 8,
+    "name": "Astronime",
+    "internalName": "Astronime",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Astronime - anime subtitle Indonesia, runtime-clean parser, player_ajax, Turbovid HLS, and Hydrax/Abyss resolver flow",
+    "fileSize": 40435,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "apiVersion": 1,
+    "fileHash": "sha256-671ddc27ae27caadc94adbbfd9bd0eaaa697cfd1e52863c0828dac8807cf5e82"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Chikianimation.cs3",
+    "status": 1,
+    "version": 2,
+    "name": "Chikianimation",
+    "internalName": "Chikianimation",
+    "authors": [
+      "Phisher98"
+    ],
+    "description": "English anime and donghua from chikianimation.com",
+    "fileSize": 80865,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "zh",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime"
+    ],
+    "iconUrl": "https://chikianimation.com/wp-content/uploads/2026/03/logo.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-463cd68d874eaaab02636de6180e4fc9f564451c3478454c98d54e621930c0e1"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Donghuastream.cs3",
+    "status": 1,
+    "version": 17,
+    "name": "Donghuastream",
+    "internalName": "Donghuastream",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Donghuastream untuk donghua / Chinese anime.",
+    "fileSize": 40573,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie"
+    ],
+    "iconUrl": "https://raw.githubusercontent.com/Kohi-den/extensions-source/927f9c68fd64ce52f6212ae633d0f0585eca3545/src/en/donghuastream/res/mipmap-xxxhdpi/ic_launcher.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-558fc73d686c1da05d82bd5198fa65a1efd966985fb657ed441c8b17ab140530"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Donghub.cs3",
+    "status": 1,
+    "version": 16,
+    "name": "Donghub",
+    "internalName": "Donghub",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Donghub untuk donghua dan anime subtitle Indonesia.",
+    "fileSize": 36474,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime",
+      "Cartoon"
+    ],
+    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://donghub.vip&size=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-47131c0c37716bdcfc0d422ba7865df6caeadf082d336600f81e66a56fb9ce8c"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/DubbindoProvider.cs3",
+    "status": 1,
+    "version": 6,
+    "name": "DubbindoProvider",
+    "internalName": "DubbindoProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Dubbindo \u2014 status terbatas: provider masih dapat memuat sebagian link, tetapi banyak konten di website sumber sedang processing/mati, poster kosong, atau media tidak dapat diputar.",
+    "fileSize": 35566,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "TvSeries",
+      "Movie",
+      "Cartoon",
+      "Anime",
+      "AnimeMovie"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=www.dubbindo.site&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-d522da93a5b35fc4f038cc08238485b8e988b1fa20d3de80690301a7bd15e0fa"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/HidoriStreamProvider.cs3",
+    "status": 1,
+    "version": 10,
+    "name": "HidoriStreamProvider",
+    "internalName": "HidoriStreamProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "HidoriStream \u2014 Streaming Anime Subtitle Indonesia",
+    "fileSize": 58969,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v8.hidoristream.online&size=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-2552f830129c2f23d528da0e3c375bac71e410e8204bfec5e469b96410a99b36"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KikoNime.cs3",
+    "status": 1,
+    "version": 4,
+    "name": "KikoNime",
+    "internalName": "KikoNime",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Nonton donghua dan anime subtitle Indonesia dari KikoNime",
+    "fileSize": 41246,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=kikonime.com&sz=128",
+    "apiVersion": 1,
+    "fileHash": "sha256-02e7212169bd010b1d9fcb6c078b87b01218be8971c18b1b35a4566b9614eaac"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuramanimeProvider.cs3",
+    "status": 1,
+    "version": 50,
+    "name": "KuramanimeProvider",
+    "internalName": "KuramanimeProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "fileSize": 33929,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime",
+      "OVA"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=kuramanime.com&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-949218cd4f1c1f0e51c1ea8d09cd1aefe07f031a56500b9c3fdd0d50b236f418"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuronimeProvider.cs3",
+    "status": 1,
+    "version": 3,
+    "name": "KuronimeProvider",
+    "internalName": "KuronimeProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Kuronime \u2014 Streaming Anime Subtitle Indonesia",
+    "fileSize": 39462,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "AnimeMovie",
+      "Anime",
+      "OVA"
+    ],
+    "iconUrl": "https://play-lh.googleusercontent.com/EFMkS1T-8txjLFIl9QxjcTRLa7a7Muv08C04b7ongYgodoY_b2T3GpxzGAQEx-eitfQ=w256",
+    "apiVersion": 1,
+    "fileHash": "sha256-3dd02365736fe45b72cdce98bd165129c97c71f0b29df8135c675bfcd784d98b"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/OtakudesuProvider.cs3",
+    "status": 1,
+    "version": 14,
+    "name": "OtakudesuProvider",
+    "internalName": "OtakudesuProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Otakudesu provider with source-backed homepage categories and genre rows from the current Otakudesu site.",
+    "fileSize": 27885,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?domain=otakudesu.blog&sz=%size%",
+    "apiVersion": 1,
+    "fileHash": "sha256-15fd2b6a132edf0122c18283b3d1fc5991581c01f3a5282203269bbfa0f42518"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/BilibiliProvider.cs3",
+    "status": 3,
+    "version": 15,
+    "name": "BilibiliProvider",
+    "internalName": "BilibiliProvider",
+    "authors": [
+      "sad25kag"
+    ],
+    "description": "Bilibili TV - Anime, film, serial, dan konten Asia dari bilibili.tv",
+    "fileSize": 81636,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "Movie",
+      "TvSeries"
+    ],
+    "iconUrl": "https://play-lh.googleusercontent.com/G9s84Cm1TDnKDX2P8nipS_s60cuCnYtjBRRLespF8nivjXmbV9tF1fY37clZhXMLaA",
+    "apiVersion": 1,
+    "fileHash": "sha256-e2fb6c0d3365c16ea59ea0a94d1f5e928ecdfd00ba59b8e9f66d882141f24e84"
   }
 ]
