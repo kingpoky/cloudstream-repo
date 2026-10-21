@@ -47,7 +47,14 @@ class EnxapiAnime : MainAPI() {
 
     private val api get() = "$mainUrl/api/v1"
 
+    // User-Agent WAJIB browser. Cloudflare di depan enxapi memblokir UA
+    // `okhttp/...` (default CloudStream) dengan halaman 403 "Attention
+    // Required" SEBELUM request sampai ke aplikasi — gerbang lapis pertama,
+    // terpisah dari gerbang Accept-Language/Referer milik aplikasi.
+    // Gejalanya di HP: "No links found" walau katalog tampil normal dari
+    // pemeriksa server yang kebetulan memakai UA browser.
     private val apiHeaders = mapOf(
+        "User-Agent" to UA_BROWSER,
         "Accept" to "application/json",
         "Accept-Language" to "id-ID,id;q=0.9,en;q=0.8",
         "Referer" to "$mainUrl/",
@@ -140,7 +147,11 @@ class EnxapiAnime : MainAPI() {
                     this.quality = getQualityFromName(s.quality)
                     // Header CDN datang dari token; untuk jalur proxy cukup Referer situs.
                     this.referer = direct?.headers?.get("Referer") ?: "$mainUrl/"
-                    direct?.headers?.let { this.headers = it }
+                    // UA ikut DI SETIAP link: pemutar menembak URL ini sendiri,
+                    // di luar apiHeaders. Jalur proxy melewati Cloudflare lagi
+                    // dan akan 403 tanpa UA browser.
+                    this.headers = mapOf("User-Agent" to UA_BROWSER) +
+                        (direct?.headers ?: emptyMap())
                 }
             )
         }

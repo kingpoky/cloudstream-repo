@@ -6,6 +6,20 @@ import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 
 /**
+ * User-Agent browser, dipakai SEMUA panggilan API di modul ini.
+ *
+ * Cloudflare di depan enxapi menolak UA `okhttp/...` — default NiceHttp
+ * CloudStream — dengan halaman 403 "Attention Required" (~4,5 KB HTML),
+ * BUKAN `{"error":"akses ditolak"}` 25 byte milik aplikasi. Dua gerbang
+ * berbeda, dua lapis berbeda. CDN video tidak peduli UA; hanya API.
+ *
+ * Top-level di satu modul gradle = terlihat semua file di modul ini.
+ */
+const val UA_BROWSER =
+    "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 " +
+        "(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36"
+
+/**
  * Enxapi — provider donghua sub Indo.
  *
  * Situsnya React SPA: HTML-nya kosong, SEMUA data datang dari JSON API
@@ -36,8 +50,14 @@ class Enxapi : MainAPI() {
 
     private val api get() = "$mainUrl/api/v1"
 
-    // Dua header gerbang. Tanpa ini setiap endpoint balas 403.
+    // User-Agent WAJIB browser. Cloudflare di depan enxapi memblokir UA
+    // `okhttp/...` (default CloudStream) dengan halaman 403 "Attention
+    // Required" SEBELUM request sampai ke aplikasi — gerbang lapis pertama,
+    // terpisah dari gerbang Accept-Language/Referer milik aplikasi.
+    // Gejalanya di HP: "No links found" walau katalog tampil normal dari
+    // pemeriksa server yang kebetulan memakai UA browser.
     private val apiHeaders = mapOf(
+        "User-Agent" to UA_BROWSER,
         "Accept" to "application/json",
         "Accept-Language" to "id-ID,id;q=0.9,en;q=0.8",
         "Referer" to "$mainUrl/",

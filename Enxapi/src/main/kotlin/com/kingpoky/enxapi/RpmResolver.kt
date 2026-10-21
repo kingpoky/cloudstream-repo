@@ -30,6 +30,7 @@ object RpmResolver {
                 app.get(
                     "https://$host/api/v1/video?id=$id&w=1920&h=1080&r=enxapi.id",
                     headers = mapOf(
+                        "User-Agent" to UA_BROWSER,
                         "Host" to host,
                         "Referer" to "https://$host/",
                         "Origin" to "https://$host",
