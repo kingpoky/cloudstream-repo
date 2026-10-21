@@ -119,10 +119,13 @@ def preserved(folder, state, allow_moviebox):
     before = catalog(state["catalog"])
     after = verify_catalog(folder)
     assert not (set(REMOVED) & PROTECTED), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
-    # Modul di EXTRA yang belum ada di snapshot awal adalah modul BARU yang sah
-    # ditambahkan lewat PUBLISH_MODULES (env var eksplisit, bukan input bebas) --
-    # satu-satunya jalur sebuah nama baru boleh muncul di katalog.
-    new_modules = set(EXTRA) - set(before)
+    # Modul di EXTRA yang benar-benar baru MUNCUL di distribusi (bukan hanya
+    # disebut di EXTRA) adalah modul baru yang sah ditambahkan lewat
+    # PUBLISH_MODULES. Irisan dengan (after - before), bukan EXTRA mentah --
+    # EXTRA adalah env var module-level yang terbaca di SEMUA pemanggilan
+    # (termasuk saat unittest lain jalan di proses CI yang sama), jadi harus
+    # dibuktikan dulu modul itu nyata sebelum dianggap "baru yang sah".
+    new_modules = set(EXTRA) & (set(after) - set(before))
     assert (set(before) - set(REMOVED)) | new_modules == set(after), "Catalog identities changed"
     mutable = set(EXTRA) | ({"Moviebox"} if allow_moviebox else set())
     for name in before:
