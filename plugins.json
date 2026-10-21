@@ -451,14 +451,14 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Enxapi.cs3",
     "status": 1,
-    "version": 1,
+    "version": 2,
     "name": "Enxapi",
     "internalName": "Enxapi",
     "authors": [
       "kingpoky"
     ],
     "description": "Enxapi \u2014 katalog donghua sub Indo lewat JSON API /api/v1 (bukan scraping HTML).",
-    "fileSize": 39158,
+    "fileSize": 39433,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -468,6 +468,6 @@
     ],
     "iconUrl": "https://enxapi.id/favicon-32.png",
     "apiVersion": 1,
-    "fileHash": "sha256-23e12b34d984dfcd69b04b5f3398442b8dad9e0e055c4f1bf2729434c1f8a8aa"
+    "fileHash": "sha256-ceda0b32aae510a98157f7af4b2410662d542871433bbecb04f35ff0006d3aaa"
   }
 ]
