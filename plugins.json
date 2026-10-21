@@ -447,5 +447,27 @@
     "iconUrl": "https://ww44.pencurimovie.baby/favicon.ico",
     "apiVersion": 1,
     "fileHash": "sha256-a86177cb62fd181aad33eafee68e6637394a88e99b160ce2ca6086206a559fb9"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Enxapi.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Enxapi",
+    "internalName": "Enxapi",
+    "authors": [
+      "kingpoky"
+    ],
+    "description": "Enxapi \u2014 katalog donghua sub Indo lewat JSON API /api/v1 (bukan scraping HTML).",
+    "fileSize": 39158,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://enxapi.id/favicon-32.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-23e12b34d984dfcd69b04b5f3398442b8dad9e0e055c4f1bf2729434c1f8a8aa"
   }
 ]
