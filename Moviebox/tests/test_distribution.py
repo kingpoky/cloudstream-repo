@@ -162,6 +162,41 @@ class DistributionTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "Source modul masih ada"):
                 release.remove_modules(self.folder, self.state)
 
+    def test_publish_extra_adds_new_module(self):
+        """Provider pertama kali masuk lewat PUBLISH_MODULES (bukan update modul lama)."""
+        new_row = artifact(self.root / "NewPlugin/build/NewPlugin.cs3", "NewPlugin", 1,
+            {"Lcom/example/NewPluginPlugin;"})
+        (self.root / "NewPlugin/build.gradle.kts").write_text("version = 1\n")
+        generated = self.generated + [new_row]
+        (self.root / "build/plugins.json").write_text(json.dumps(generated))
+        with patch.object(release, "EXTRA", ("NewPlugin",)):
+            release.publish_extra(self.folder, self.state)
+        rows = json.loads((self.folder / "plugins.json").read_text())
+        names = {row["internalName"] for row in rows}
+        self.assertEqual(names, {"Moviebox", "Other", "Extra", "NewPlugin"})
+        self.assertTrue((self.folder / "NewPlugin.cs3").exists())
+
+    def test_publish_extra_updates_existing_module(self):
+        """Modul lama yang SUDAH ada di katalog tetap kena gate versi/hash seperti biasa."""
+        updated_row = artifact(self.root / "Extra/build/Extra.cs3", "Extra", 13)
+        (self.root / "Extra/build.gradle.kts").write_text("version = 13\n")
+        generated = [updated_row if row["internalName"] == "Extra" else row for row in self.generated]
+        (self.root / "build/plugins.json").write_text(json.dumps(generated))
+        with patch.object(release, "EXTRA", ("Extra",)):
+            release.publish_extra(self.folder, self.state)
+        rows = {row["internalName"]: row for row in json.loads((self.folder / "plugins.json").read_text())}
+        self.assertEqual(rows["Extra"]["version"], 13)
+
+    def test_publish_extra_rejects_existing_module_downgrade(self):
+        """Modul lama tidak boleh turun versi lewat PUBLISH_MODULES, sama ketatnya spt Moviebox."""
+        downgraded = artifact(self.root / "Extra/build/Extra.cs3", "Extra", 1)
+        (self.root / "Extra/build.gradle.kts").write_text("version = 1\n")
+        generated = [downgraded if row["internalName"] == "Extra" else row for row in self.generated]
+        (self.root / "build/plugins.json").write_text(json.dumps(generated))
+        with patch.object(release, "EXTRA", ("Extra",)):
+            with self.assertRaisesRegex(AssertionError, "downgrade"):
+                release.publish_extra(self.folder, self.state)
+
 
 if __name__ == "__main__":
     unittest.main()

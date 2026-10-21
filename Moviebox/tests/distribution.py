@@ -119,14 +119,19 @@ def preserved(folder, state, allow_moviebox):
     before = catalog(state["catalog"])
     after = verify_catalog(folder)
     assert not (set(REMOVED) & PROTECTED), "Modul terlindungi tidak boleh dihapus lewat jalur ini"
-    assert set(before) - set(REMOVED) == set(after), "Catalog identities changed"
+    # Modul di EXTRA yang belum ada di snapshot awal adalah modul BARU yang sah
+    # ditambahkan lewat PUBLISH_MODULES (env var eksplisit, bukan input bebas) --
+    # satu-satunya jalur sebuah nama baru boleh muncul di katalog.
+    new_modules = set(EXTRA) - set(before)
+    assert (set(before) - set(REMOVED)) | new_modules == set(after), "Catalog identities changed"
     mutable = set(EXTRA) | ({"Moviebox"} if allow_moviebox else set())
     for name in before:
         if name not in mutable and name not in REMOVED:
             assert before[name] == after[name], "Protected catalog entry changed: " + name
     files = inventory(folder)
     removed_files = {name + ".cs3" for name in REMOVED}
-    assert files.keys() == state["files"].keys() - removed_files, "Published file inventory changed"
+    new_files = {name + ".cs3" for name in new_modules}
+    assert files.keys() == (state["files"].keys() - removed_files) | new_files, "Published file inventory changed"
     allowed = {"plugins.json"} | {name + ".cs3" for name in mutable}
     for path, digest in state["files"].items():
         if path not in allowed and path not in removed_files:
@@ -153,9 +158,10 @@ def publish_extra(folder, state):
         verify_package(source, row)
         version = int(re.search(r"^version\s*=\s*(\d+)", (ROOT / name / "build.gradle.kts").read_text(), re.M)[1])
         assert row["version"] == version, "Generated version differs from source: " + name
-        assert row["version"] >= before[name]["version"], "Version downgrade: " + name
-        if row["version"] == before[name]["version"]:
-            assert row["fileHash"] == before[name]["fileHash"], "Changed package needs a version increase: " + name
+        if name in before:
+            assert row["version"] >= before[name]["version"], "Version downgrade: " + name
+            if row["version"] == before[name]["version"]:
+                assert row["fileHash"] == before[name]["fileHash"], "Changed package needs a version increase: " + name
         staged.append((name, row, source))
     # Semua pemeriksaan selesai sebelum distribusi disentuh.
     rows = {name: row for name, row, _ in staged}
@@ -163,8 +169,13 @@ def publish_extra(folder, state):
         temporary = folder / (name + ".cs3.pending")
         shutil.copyfile(source, temporary)
         temporary.replace(folder / (name + ".cs3"))
+    # current.items() hanya memuat entri yang SUDAH ada di distribusi -- modul
+    # baru (pertama kali lewat EXTRA) tidak akan pernah muncul lewat jalur itu,
+    # jadi entri baru ditambahkan eksplisit di akhir.
+    merged = dict(current)
+    merged.update(rows)
     temporary = folder / "plugins.json.pending"
-    temporary.write_text(json.dumps([rows.get(name, row) for name, row in current.items()], indent=2) + "\n")
+    temporary.write_text(json.dumps([rows.get(name, row) for name, row in merged.items()], indent=2) + "\n")
     temporary.replace(folder / "plugins.json")
     after = verify_catalog(folder)
     for name, row, source in staged:
