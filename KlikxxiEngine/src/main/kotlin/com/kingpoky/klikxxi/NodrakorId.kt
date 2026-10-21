@@ -1,6 +1,7 @@
 package com.kingpoky.klikxxi
 
 import com.lagradost.cloudstream3.TvType
+import com.lagradost.cloudstream3.mainPageOf
 
 /**
  * NodrakorId — turunan engine muvipro (KlikxxiEngine), meski di APK asli

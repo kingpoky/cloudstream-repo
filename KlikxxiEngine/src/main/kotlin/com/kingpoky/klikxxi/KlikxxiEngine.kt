@@ -5,6 +5,21 @@ import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.network.CloudflareKiller
 import org.jsoup.nodes.Element
 
+// Util lokal (BUKAN API built-in CloudStream), sama pola dengan family Kazefuri.
+fun removeBloatx(text: String): String =
+    text.replace(Regex("(?i)\\s*(sub indo|subtitle indonesia)\\s*"), "").trim()
+
+fun getImageAttr(el: Element): String? {
+    var url = el.attr("data-src").ifEmpty { el.attr("src") }
+    if (url.isEmpty()) {
+        val srcset = el.attr("srcset")
+        if (srcset.isNotEmpty()) {
+            url = srcset.split(",").firstOrNull()?.trim()?.split(" ")?.firstOrNull() ?: ""
+        }
+    }
+    return url.ifEmpty { null }?.let { httpsify(it) }
+}
+
 /**
  * KlikxxiEngine — engine dasar family "muvipro" WP-movie-theme (gmr-* classes).
  * Diturunkan via RE langsung dari com.lagradost.cloudxtream v4.9.43 (Klikxxi.smali,

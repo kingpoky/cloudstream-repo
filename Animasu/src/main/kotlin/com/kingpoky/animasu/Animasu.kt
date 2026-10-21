@@ -4,6 +4,18 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import org.jsoup.Jsoup
 
+// Util lokal (BUKAN API built-in CloudStream).
+fun getImageAttr(el: org.jsoup.nodes.Element): String? {
+    var url = el.attr("data-src").ifEmpty { el.attr("src") }
+    if (url.isEmpty()) {
+        val srcset = el.attr("srcset")
+        if (srcset.isNotEmpty()) {
+            url = srcset.split(",").firstOrNull()?.trim()?.split(" ")?.firstOrNull() ?: ""
+        }
+    }
+    return url.ifEmpty { null }?.let { httpsify(it) }
+}
+
 /**
  * Animasu — tema anime populer (div.bs/div.tt/div.infox/ul#daftarepisode),
  * BEDA markup dari Kazefuri tapi SAMA PERSIS mekanisme loadLinks

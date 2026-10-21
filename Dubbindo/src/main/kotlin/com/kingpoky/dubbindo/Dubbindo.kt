@@ -5,6 +5,18 @@ import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.network.CloudflareKiller
 import org.jsoup.nodes.Element
 
+// Util lokal (BUKAN API built-in CloudStream).
+fun getImageAttr(el: Element): String? {
+    var url = el.attr("data-src").ifEmpty { el.attr("src") }
+    if (url.isEmpty()) {
+        val srcset = el.attr("srcset")
+        if (srcset.isNotEmpty()) {
+            url = srcset.split(",").firstOrNull()?.trim()?.split(" ")?.firstOrNull() ?: ""
+        }
+    }
+    return url.ifEmpty { null }?.let { httpsify(it) }
+}
+
 /**
  * Dubbindo — video self-hosted (BUKAN iframe embed pihak ketiga seperti
  * provider lain). RE dari com.lagradost.cloudxtream Dubbindo.smali, TAPI

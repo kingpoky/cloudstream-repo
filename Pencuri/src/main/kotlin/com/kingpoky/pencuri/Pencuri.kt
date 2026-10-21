@@ -4,6 +4,18 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
+// Util lokal (BUKAN API built-in CloudStream).
+fun getImageAttr(el: Element): String? {
+    var url = el.attr("data-src").ifEmpty { el.attr("src") }
+    if (url.isEmpty()) {
+        val srcset = el.attr("srcset")
+        if (srcset.isNotEmpty()) {
+            url = srcset.split(",").firstOrNull()?.trim()?.split(" ")?.firstOrNull() ?: ""
+        }
+    }
+    return url.ifEmpty { null }?.let { httpsify(it) }
+}
+
 /**
  * Pencuri (PencuriMovie) — tema "DooPlay" (div.ml-item/div.movieplay),
  * BEDA dari engine Kazefuri maupun KlikxxiEngine yang sudah ditulis.

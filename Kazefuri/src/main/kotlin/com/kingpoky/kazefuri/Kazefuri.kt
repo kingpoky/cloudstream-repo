@@ -8,6 +8,22 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
 
+// Util lokal (BUKAN API built-in CloudStream) dipakai di seluruh family
+// Kazefuri (termasuk Nekokun/Auratail/Oploverz lewat warisan class).
+fun removeBloatx(text: String): String =
+    text.replace(Regex("(?i)\\s*(sub indo|subtitle indonesia)\\s*"), "").trim()
+
+fun getImageAttr(el: Element): String? {
+    var url = el.attr("data-src").ifEmpty { el.attr("src") }
+    if (url.isEmpty()) {
+        val srcset = el.attr("srcset")
+        if (srcset.isNotEmpty()) {
+            url = srcset.split(",").firstOrNull()?.trim()?.split(" ")?.firstOrNull() ?: ""
+        }
+    }
+    return url.ifEmpty { null }?.let { httpsify(it) }
+}
+
 /**
  * Kazefuri — engine dasar family WP-anime-theme (mobius/mirror pattern).
  * Diturunkan via RE langsung dari com.lagradost.cloudxtream v4.9.43 (Kazefuri.smali),
@@ -33,7 +49,7 @@ open class Kazefuri : MainAPI() {
         "&status=&type=movie&order=latest" to "Movie",
     )
 
-    private suspend fun request(url: String, ref: String? = null) =
+    protected suspend fun request(url: String, ref: String? = null) =
         app.get(url, interceptor = interceptor, referer = ref, timeout = 30)
 
     override suspend fun getMainPage(
@@ -52,7 +68,6 @@ open class Kazefuri : MainAPI() {
         val href = element.selectFirst("a.tip")?.attr("href") ?: return null
         return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = poster
-            posterHeaders = interceptor.getCookieHeaders(mainUrl).toMap()
         }
     }
 
@@ -106,7 +121,7 @@ open class Kazefuri : MainAPI() {
         }
     }
 
-    private fun getStatus(text: String): ShowStatus = when (text) {
+    protected fun getStatus(text: String): ShowStatus = when (text) {
         "Completed" -> ShowStatus.Completed
         "Ongoing" -> ShowStatus.Ongoing
         else -> ShowStatus.Completed

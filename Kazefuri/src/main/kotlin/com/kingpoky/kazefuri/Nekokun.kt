@@ -1,5 +1,7 @@
 package com.kingpoky.kazefuri
 
+import com.lagradost.cloudstream3.mainPageOf
+
 /**
  * Nekokun — turunan engine Kazefuri, beda mainUrl + tab menu mainPage custom
  * (nambah "Live Action" di antara kategori, lihat Nekokun.smali <init>).
