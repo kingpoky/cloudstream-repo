@@ -338,5 +338,114 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=otakudesu.blog&sz=%size%",
     "apiVersion": 1,
     "fileHash": "sha256-15fd2b6a132edf0122c18283b3d1fc5991581c01f3a5282203269bbfa0f42518"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Kazefuri.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Kazefuri",
+    "internalName": "Kazefuri",
+    "authors": [
+      "kingpoky"
+    ],
+    "description": "Kazefuri + 3 turunan family (Nekokun, AuraTail, Oploverz) \u2014 WP-anime-theme (mobius/mirror).",
+    "fileSize": 19694,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://kazefuri.space/wp-content/uploads/2023/08/cropped-favicon-32x32.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-7293681e3244f72807db79fb2cc7f29d60aa42ee5ca48afd24da2539f28d4e01"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KlikxxiEngine.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "KlikxxiEngine",
+    "internalName": "KlikxxiEngine",
+    "authors": [
+      "kingpoky"
+    ],
+    "description": "KawanFilm + NodrakorId \u2014 family muvipro (KlikxxiEngine, gmr-* classes).",
+    "fileSize": 16703,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Movie",
+      "TvSeries",
+      "AsianDrama"
+    ],
+    "iconUrl": "https://web.kawanfilm21.co/wp-content/uploads/2023/01/cropped-favicon-32x32.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-070dfe5145d0045515c3f5c28edd071b21b324cc2a7e874a015e379cc9b85453"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Animasu.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Animasu",
+    "internalName": "Animasu",
+    "authors": [
+      "kingpoky"
+    ],
+    "description": "Animasu \u2014 tema anime populer (div.bs/div.tt, mobius/mirror loadLinks).",
+    "fileSize": 11817,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie"
+    ],
+    "iconUrl": "https://animasu.love/wp-content/uploads/2023/01/cropped-favicon-32x32.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-af06bf0a49bca8925d109c998d9a34ea765115158f5a0c9a27b23784aeb0d5fb"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Dubbindo.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Dubbindo",
+    "internalName": "Dubbindo",
+    "authors": [
+      "kingpoky"
+    ],
+    "description": "Dubbindo \u2014 video self-hosted (video source[src] langsung, bukan iframe embed).",
+    "fileSize": 9217,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "Cartoon"
+    ],
+    "iconUrl": "https://www.dubbindo.site/favicon.ico",
+    "apiVersion": 1,
+    "fileHash": "sha256-38c59c812f1edb6d070776cdcc727178f4367770105e46bfda0f2ecabe83d46c"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Pencuri.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Pencuri",
+    "internalName": "Pencuri",
+    "authors": [
+      "kingpoky"
+    ],
+    "description": "PencuriMovie \u2014 tema DooPlay (div.ml-item/div.movieplay).",
+    "fileSize": 12407,
+    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
+    "language": "id",
+    "tvTypes": [
+      "Movie",
+      "TvSeries",
+      "AsianDrama"
+    ],
+    "iconUrl": "https://ww44.pencurimovie.baby/favicon.ico",
+    "apiVersion": 1,
+    "fileHash": "sha256-a86177cb62fd181aad33eafee68e6637394a88e99b160ce2ca6086206a559fb9"
   }
 ]
