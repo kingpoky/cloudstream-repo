@@ -19,7 +19,7 @@ env:
   # Modul biasa yang ikut dibangun dan diterbitkan. Tambahkan nama modul di sini
   # setelah menaikkan `version` di <Modul>/build.gradle.kts. Kosongkan bila tidak
   # ada modul biasa yang berubah; Moviebox punya jalur sendiri.
-  PUBLISH_MODULES: "Kazefuri KlikxxiEngine Animasu Dubbindo Pencuri"
+  PUBLISH_MODULES: "Enxapi"
   # Modul yang DIHAPUS dari katalog pada run ini. Isi hanya saat benar-benar
   # mencabut plugin, lalu KOSONGKAN lagi setelah run berhasil — kalau dibiarkan
   # terisi, run berikutnya gagal karena entri sudah tidak ada di katalog.
