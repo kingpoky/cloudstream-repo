@@ -7,10 +7,11 @@ import android.content.Context
 @CloudstreamPlugin
 class KazefuriPlugin : Plugin() {
     override fun load(context: Context) {
-        // Family WP-anime-theme (mobius/mirror): 1 engine dasar + 3 turunan.
+        // Family WP-anime-theme (mobius/mirror): 1 engine dasar + 2 turunan.
+        // Oploverz DICABUT 23/10/2026: oploverz.am kehilangan CPT `anime`,
+        // semua /anime/<slug>/ balas 404 sehingga load() putus total.
         registerMainAPI(Kazefuri())
         registerMainAPI(Nekokun())
         registerMainAPI(Auratail())
-        registerMainAPI(OploverzProvider())
     }
 }

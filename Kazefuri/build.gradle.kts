@@ -1,10 +1,10 @@
 // use an integer for version numbers
-version = 1
+version = 2
 
 
 cloudstream {
     language = "id"
-    description = "Kazefuri + 3 turunan family (Nekokun, AuraTail, Oploverz) — WP-anime-theme (mobius/mirror)."
+    description = "Kazefuri + 2 turunan family (Nekokun, AuraTail) — WP-anime-theme (mobius/mirror)."
     authors = listOf("kingpoky")
 
     /**
