@@ -1,25 +1,5 @@
 [
   {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Eporner.cs3",
-    "status": 1,
-    "version": 13,
-    "name": "Eporner",
-    "internalName": "Eporner",
-    "authors": [
-      "AdiManu"
-    ],
-    "description": "Eporner",
-    "fileSize": 15062,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "en",
-    "tvTypes": [
-      "NSFW"
-    ],
-    "iconUrl": "https://raw.githubusercontent.com/phisher98/TVVVV/main/eporner.ico",
-    "apiVersion": 1,
-    "fileHash": "sha256-4b1c1fb0416ddfb377f4eadbe453a3400f9a72fb48b3c771b8e1e9def4e8d6fc"
-  },
-  {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/FreeReels.cs3",
     "status": 1,
     "version": 30,
@@ -62,46 +42,6 @@
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://idlixian.com&size=16",
     "apiVersion": 1,
     "fileHash": "sha256-a0a07100a14b0f166357bdcbc45440a5bd8e0f31e07c53cb35b49353575c3ecf"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/IndoAsia.cs3",
-    "status": 1,
-    "version": 8,
-    "name": "IndoAsia",
-    "internalName": "IndoAsia",
-    "authors": [
-      "aldry84"
-    ],
-    "description": "Jangan Coli Yaa",
-    "fileSize": 22011,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "NSFW"
-    ],
-    "iconUrl": "https://homecookingrocks.com/wp-content/uploads/2024/10/cropped-indomax21-favicon-color-1.png",
-    "apiVersion": 1,
-    "fileHash": "sha256-4ec7a469ceda73351010962eedc5c0599e1cde67b1c048c5b9363abe77a08716"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/JavHey.cs3",
-    "status": 1,
-    "version": 10,
-    "name": "JavHey",
-    "internalName": "JavHey",
-    "authors": [
-      "aldey84"
-    ],
-    "description": "Best Japan AV porn site, free forever, high speed, no lag, over 100,000 videos, daily update, no ads while playing video.",
-    "fileSize": 23083,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "id",
-    "tvTypes": [
-      "NSFW"
-    ],
-    "iconUrl": "https://missav.ws/missav/logo-square.png",
-    "apiVersion": 1,
-    "fileHash": "sha256-ef4f7be886ecceaf084c1328541c7fd3f020bd3da5e3f2bdbe6f127ec0e56b1c"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KisskhProvider.cs3",
@@ -148,26 +88,6 @@
     "iconUrl": "https://assets.lk21.party/favicons/apple-icon-144x144.png",
     "apiVersion": 1,
     "fileHash": "sha256-dcf987f411e4a989e5327a99ad7d2147aa44df51169029ae96164cfbe02ef6db"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Mangoporn.cs3",
-    "status": 1,
-    "version": 5,
-    "name": "Mangoporn",
-    "internalName": "Mangoporn",
-    "authors": [
-      "AmanHnB"
-    ],
-    "description": "MangoPorn",
-    "fileSize": 18944,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "en",
-    "tvTypes": [
-      "NSFW"
-    ],
-    "iconUrl": "http://mangoporn.net/wp-content/uploads/2024/07/mangoporn.net_.png",
-    "apiVersion": 1,
-    "fileHash": "sha256-ea41b17d8f862d83613120e0000ccaafd59420802bfa3b2696af515b85210089"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Moviebox.cs3",
@@ -234,26 +154,6 @@
     "fileHash": "sha256-9d56a2b36572e0af8744412dd51a4b1e29717b506774d1213e2d27dc2fa4d8dd"
   },
   {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/PODJAV.cs3",
-    "status": 1,
-    "version": 9,
-    "name": "PODJAV",
-    "internalName": "PODJAV",
-    "authors": [
-      "aldey84"
-    ],
-    "description": "Best Japan AV porn site, free forever, high speed, no lag, over 100,000 videos, daily update, no ads while playing video.",
-    "fileSize": 27053,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "en",
-    "tvTypes": [
-      "NSFW"
-    ],
-    "iconUrl": "https://podjav.tv/wp-content/uploads/2025/02/favicon-podjav.ico",
-    "apiVersion": 1,
-    "fileHash": "sha256-876915f786cb6cb73425fe5e88087d3207befcfd18ccbdcfb5484e63748f9fa7"
-  },
-  {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Sflix.cs3",
     "status": 1,
     "version": 3,
@@ -274,26 +174,6 @@
     "iconUrl": "https://sflix.film/favicon.ico",
     "apiVersion": 1,
     "fileHash": "sha256-e43429071f393c931421cf34a5c20663927e8b4a37828cb5d20dbf1467880d04"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Xhamster.cs3",
-    "status": 1,
-    "version": 9,
-    "name": "Xhamster",
-    "internalName": "Xhamster",
-    "authors": [
-      "aldey84"
-    ],
-    "description": "Awas Jangan Coli Kawan",
-    "fileSize": 16010,
-    "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
-    "language": "en",
-    "tvTypes": [
-      "NSFW"
-    ],
-    "iconUrl": "https://static.xhpingcdn.com/xh-mobile/images/favicon/favicon-v2-512x512.png?v=1",
-    "apiVersion": 1,
-    "fileHash": "sha256-2d807a7654d5704fe56b246c7dbbc0f19301d41f2fcaff1bb5f8f4284db7b448"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KuronimeProvider.cs3",
