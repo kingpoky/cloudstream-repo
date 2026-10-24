@@ -46,11 +46,32 @@ class Dubbindo : MainAPI() {
     private suspend fun request(url: String) =
         app.get(url, interceptor = interceptor, timeout = 30)
 
+    override val mainPage = mainPageOf(
+        "" to "Beranda",
+        "videos/top" to "Terpopuler",
+        "videos/latest" to "Terbaru"
+    )
+
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val path = request.data
+        val url = if (path.isEmpty()) {
+            if (page == 1) mainUrl else "$mainUrl/videos/latest?page=$page"
+        } else {
+            if (page == 1) "$mainUrl/$path" else "$mainUrl/$path?page=$page"
+        }
+        val doc = request(url).document
+        val items = doc.select("div.video-list, div.video-wrapper")
+            .mapNotNull { toSearchResult(it) }
+            .distinctBy { it.url }
+        return newHomePageResponse(request.name, items, hasNext = items.isNotEmpty())
+    }
+
     private fun toSearchResult(element: Element): SearchResponse? {
-        val titleEl = element.selectFirst("h4, div.video-title") ?: return null
-        val title = titleEl.text().trim()
-        val href = element.selectFirst("a")?.attr("href") ?: return null
-        val poster = element.selectFirst("div.video-thumb a img, div.ra-thumb a img")
+        val aEl = element.selectFirst("a[href*='/watch/']") ?: element.selectFirst("a") ?: return null
+        val href = aEl.attr("href").ifBlank { return null }
+        val titleEl = element.selectFirst(".video-list-title, .video-title, h4") ?: aEl
+        val title = titleEl.text().trim().ifBlank { return null }
+        val poster = element.selectFirst("div.video-thumb a img, div.ra-thumb a img, img")
             ?.let { getImageAttr(it) }
         return newAnimeSearchResponse(title, href, TvType.Anime) {
             posterUrl = poster
@@ -99,7 +120,7 @@ class Dubbindo : MainAPI() {
                     url = src,
                     referer = mainUrl,
                     quality = qualityNum,
-                    type = ExtractorLinkType.VIDEO,
+                    type = ExtractorLinkType.VIDEO
                 )
             )
         }
