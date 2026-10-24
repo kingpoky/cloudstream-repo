@@ -287,14 +287,14 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Dubbindo.cs3",
     "status": 1,
-    "version": 1,
+    "version": 2,
     "name": "Dubbindo",
     "internalName": "Dubbindo",
     "authors": [
       "kingpoky"
     ],
     "description": "Dubbindo \u2014 video self-hosted (video source[src] langsung, bukan iframe embed).",
-    "fileSize": 9217,
+    "fileSize": 10876,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -304,7 +304,7 @@
     ],
     "iconUrl": "https://www.dubbindo.site/favicon.ico",
     "apiVersion": 1,
-    "fileHash": "sha256-38c59c812f1edb6d070776cdcc727178f4367770105e46bfda0f2ecabe83d46c"
+    "fileHash": "sha256-c6098a5a7eb4fab714982ebe2fa086ff3713dc066a64a666f89e0f2e741d115a"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Pencuri.cs3",
