@@ -364,48 +364,59 @@ class Dramabox : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
-        // `url` di sini adalah bookId mentah (lihat toSearchResult).
-        val bookId = url
-        val body = sapiPost(
-            "/chapterv2/detail",
-            mapOf("needRecommend" to false, "from" to "book_album", "bookId" to bookId)
-        )
-        val parsed = tryParseJson<DetailResponse>(body)
-        val data = parsed?.data
+        // `url` dari CloudStream bisa berbentuk "$mainUrl/$bookId" atau "$bookId"
+        val bookId = url.split("/").last().substringBefore("?").trim()
 
-        // Nama/poster tidak selalu ikut di chapterv2/detail -- ambil dari search
-        // sebagai fallback kalau kosong (endpoint ini fokus ke daftar chapter).
-        var title = bookId
+        var title = "Drama $bookId"
         var poster: String? = null
         var synopsis: String? = null
+        var tags: List<String>? = null
         try {
-            val sres = sapiPost(
-                "/search/search",
-                mapOf("searchSource" to "detail_fallback", "pageNo" to 1, "pageSize" to 1,
-                    "from" to "detail_fallback", "keyword" to bookId)
+            val rbody = sapiPost("/he001/reserveBookDetail", mapOf("bookId" to bookId))
+            val rdata = tryParseJson<ReserveBookDetailResponse>(rbody)?.data
+            if (rdata != null) {
+                title = rdata.bookName?.trim()?.ifBlank { null } ?: title
+                poster = rdata.coverWap
+                synopsis = rdata.introduction
+                tags = rdata.tags
+            }
+        } catch (_: Exception) { /* best-effort */ }
+
+        var episodes: List<Episode> = emptyList()
+        try {
+            val dbody = sapiPost(
+                "/chapterv2/detail",
+                mapOf("needRecommend" to false, "from" to "book_album", "bookId" to bookId)
             )
-            val sp = tryParseJson<SearchApiResponse>(sres)
-            val match = sp?.data?.searchList?.firstOrNull { it.bookId == bookId }
-            if (match != null) {
-                title = match.bookName ?: title
-                poster = match.cover
-                synopsis = match.introduction
-            }
-        } catch (_: Exception) { /* fallback best-effort saja */ }
-
-        val chapterIndexAndCharge = fetchAllChapterMeta(bookId)
-        val episodes = chapterIndexAndCharge
-            .filter { it.second == 0 } // hanya chapter GRATIS (isCharge == 0)
-            .map { (index, _) ->
-                newEpisode(LoadData(bookId, index).toJson()) {
-                    this.episode = index + 1
-                    this.name = "Episode ${index + 1}"
+            val ddata = tryParseJson<DetailResponse>(dbody)?.data
+            val chapterList = ddata?.list.orEmpty()
+            episodes = chapterList
+                .filter { (it.isCharge ?: 1) == 0 }
+                .map { ch ->
+                    val index = ch.chapterIndex ?: 0
+                    newEpisode(LoadData(bookId, index).toJson()) {
+                        this.episode = index + 1
+                        this.name = "Episode ${index + 1}"
+                    }
                 }
-            }
+        } catch (_: Exception) { }
 
-        return newTvSeriesLoadResponse(title, bookId, TvType.AsianDrama, episodes) {
+        if (episodes.isEmpty()) {
+            val chapterIndexAndCharge = fetchAllChapterMeta(bookId)
+            episodes = chapterIndexAndCharge
+                .filter { it.second == 0 } // hanya chapter GRATIS (isCharge == 0)
+                .map { (index, _) ->
+                    newEpisode(LoadData(bookId, index).toJson()) {
+                        this.episode = index + 1
+                        this.name = "Episode ${index + 1}"
+                    }
+                }
+        }
+
+        return newTvSeriesLoadResponse(title, url, TvType.AsianDrama, episodes) {
             posterUrl = poster
-            plot = synopsis ?: data?.let { "Chapter gratis: ${episodes.size}" }
+            plot = synopsis ?: "Chapter gratis: ${episodes.size}"
+            this.tags = tags
         }
     }
 
@@ -453,6 +464,7 @@ class Dramabox : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val loadData = tryParseJson<LoadData>(data) ?: return false
+        val bookId = loadData.bookId.split("/").last().substringBefore("?").trim()
         val body = sapiPost(
             "/chapterv2/batch/load",
             mapOf(
@@ -466,7 +478,7 @@ class Dramabox : MainAPI() {
                 "rid" to "",
                 "pullCid" to "",
                 "loadDirection" to 0,
-                "bookId" to loadData.bookId,
+                "bookId" to bookId,
             )
         )
         val parsed = tryParseJson<BatchLoadResponse>(body)
@@ -524,8 +536,23 @@ class Dramabox : MainAPI() {
         @JsonProperty("chapterCount") val chapterCount: Int?,
     )
 
+    data class ReserveBookDetailResponse(@JsonProperty("data") val data: ReserveBookDetailData?)
+    data class ReserveBookDetailData(
+        @JsonProperty("bookId") val bookId: String?,
+        @JsonProperty("bookName") val bookName: String?,
+        @JsonProperty("coverWap") val coverWap: String?,
+        @JsonProperty("chapterCount") val chapterCount: Int?,
+        @JsonProperty("introduction") val introduction: String?,
+        @JsonProperty("tags") val tags: List<String>?,
+    )
+
     data class DetailResponse(@JsonProperty("data") val data: DetailData?)
-    data class DetailData(@JsonProperty("list") val list: List<Any>?)
+    data class DetailData(@JsonProperty("list") val list: List<DetailChapterItem>?)
+    data class DetailChapterItem(
+        @JsonProperty("chapterId") val chapterId: String?,
+        @JsonProperty("chapterIndex") val chapterIndex: Int?,
+        @JsonProperty("isCharge") val isCharge: Int?,
+    )
 
     data class BatchLoadResponse(@JsonProperty("data") val data: BatchLoadData?)
     data class BatchLoadData(
