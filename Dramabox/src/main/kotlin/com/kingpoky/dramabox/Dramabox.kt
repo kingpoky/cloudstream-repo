@@ -234,15 +234,25 @@ class Dramabox : MainAPI() {
             val signPayload = "timestamp=$ts$body$deviceId$androidId"
             val sn = signString(signPayload)
             val headers = baseHeaders(ts, "", sn)
-            val res = app.post(
-                "$apiBase/ap001/bootstrap?timestamp=$ts",
-                headers = headers,
-                requestBody = body.toByteArray(Charsets.UTF_8)
-                    .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull()),
-                interceptor = tlsInterceptor,
-            )
+            val res = try {
+                app.post(
+                    "$apiBase/ap001/bootstrap?timestamp=$ts",
+                    headers = headers,
+                    requestBody = body.toByteArray(Charsets.UTF_8)
+                        .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull()),
+                    interceptor = tlsInterceptor,
+                )
+            } catch (e: Exception) {
+                // Exception jaringan (DNS/TLS/timeout) -- beda kelas dari
+                // respons sukses yang isinya tidak terduga (lihat di bawah).
+                throw ErrorLoadingException(
+                    "DramaBox: koneksi gagal (${e.javaClass.simpleName}: ${e.message?.take(120)})"
+                )
+            }
             val parsed = tryParseJson<BootstrapResponse>(res.text)
-            val t = parsed?.data?.user?.token ?: throw ErrorLoadingException("DramaBox: gagal ambil token")
+            val t = parsed?.data?.user?.token ?: throw ErrorLoadingException(
+                "DramaBox: token kosong, HTTP ${res.code}, body: ${res.text.take(150)}"
+            )
             token = t
             return t
         }
