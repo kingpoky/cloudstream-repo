@@ -178,7 +178,6 @@ class Dramabox : MainAPI() {
     }
 
     private fun baseHeaders(ts: Long, tn: String, sn: String): Map<String, String> = mapOf(
-        "accept-encoding" to "gzip",
         "active-time" to randomActiveTime(),
         "afid" to randomAfid(ts),
         "android-id" to androidId,
