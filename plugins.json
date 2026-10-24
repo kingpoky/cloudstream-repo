@@ -353,14 +353,14 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Dramabox.cs3",
     "status": 1,
-    "version": 4,
+    "version": 5,
     "name": "Dramabox",
     "internalName": "Dramabox",
     "authors": [
       "kingpoky"
     ],
     "description": "DramaBox \u2014 short drama (katalog + episode gratis, isCharge=0 saja).",
-    "fileSize": 41183,
+    "fileSize": 43859,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -368,6 +368,6 @@
     ],
     "iconUrl": "https://www.dramabox.com/favicon.ico",
     "apiVersion": 1,
-    "fileHash": "sha256-4fb93c64397bda24959f4d1ed9cf77ad59325618cd52a524f7960b77127e8876"
+    "fileHash": "sha256-1f13708b28ddbaba336c4bcb78bb077804c64a92e42e0788929c0ed113327e52"
   }
 ]
