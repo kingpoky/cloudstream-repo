@@ -7,8 +7,12 @@ import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import okhttp3.ConnectionSpec
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.math.BigInteger
 import java.security.KeyFactory
 import java.security.Signature
@@ -51,6 +55,26 @@ class Dramabox : MainAPI() {
     override val supportedTypes = setOf(TvType.AsianDrama)
 
     private val apiBase = "https://sapi.dramaboxdb.com/drama-box"
+
+    /**
+     * Akamai di depan sapi.dramaboxdb.com fingerprint ClientHello TLS:
+     * OkHttpClient default (MODERN_TLS, advertise TLS1.2+1.3 sekaligus)
+     * KENA 403 Access Denied -- dibuktikan live, 2x percobaan independen.
+     * RESTRICTED_TLS (lebih sempit) LOLOS, juga dibuktikan live 3x
+     * berturut dengan data user asli (uid, membershipInfo, dst).
+     * App asli pakai OkHttp dgn TLS spec serupa ini (device Android asli
+     * tidak advertise cipher suite selengkap JVM default).
+     */
+    private class TlsFixInterceptor : Interceptor {
+        private val client = OkHttpClient.Builder()
+            .connectionSpecs(listOf(ConnectionSpec.RESTRICTED_TLS, ConnectionSpec.CLEARTEXT))
+            .build()
+
+        override fun intercept(chain: Interceptor.Chain): Response =
+            client.newCall(chain.request()).execute()
+    }
+
+    private val tlsInterceptor = TlsFixInterceptor()
 
     // ---- RSA signing (lihat dokumentasi kelas untuk provenance) ----------
 
@@ -193,6 +217,7 @@ class Dramabox : MainAPI() {
         "time-zone" to "+0800",
         "tn" to tn,
         "tz" to "-480",
+        "user-agent" to "okhttp/4.10.0",
         "userid" to "359146421",
         "version" to "490",
         "vn" to "4.9.0",
@@ -213,7 +238,8 @@ class Dramabox : MainAPI() {
                 "$apiBase/ap001/bootstrap?timestamp=$ts",
                 headers = headers,
                 requestBody = body.toByteArray(Charsets.UTF_8)
-                    .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull())
+                    .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull()),
+                interceptor = tlsInterceptor,
             )
             val parsed = tryParseJson<BootstrapResponse>(res.text)
             val t = parsed?.data?.user?.token ?: throw ErrorLoadingException("DramaBox: gagal ambil token")
@@ -234,7 +260,8 @@ class Dramabox : MainAPI() {
             "$apiBase$endpoint?timestamp=$ts",
             headers = headers,
             requestBody = body.toByteArray(Charsets.UTF_8)
-                .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull())
+                .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull()),
+            interceptor = tlsInterceptor,
         )
         if (res.code == 401) {
             // token invalid/expired -> refresh sekali
@@ -248,7 +275,8 @@ class Dramabox : MainAPI() {
                 "$apiBase$endpoint?timestamp=$ts2",
                 headers = baseHeaders(ts2, tn2, sn2),
                 requestBody = body.toByteArray(Charsets.UTF_8)
-                    .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull())
+                    .toRequestBody("application/json; charset=UTF-8".toMediaTypeOrNull()),
+                interceptor = tlsInterceptor,
             )
             return res2.text
         }
