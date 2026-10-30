@@ -244,14 +244,14 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KlikxxiEngine.cs3",
     "status": 1,
-    "version": 1,
+    "version": 2,
     "name": "KlikxxiEngine",
     "internalName": "KlikxxiEngine",
     "authors": [
       "kingpoky"
     ],
     "description": "KawanFilm + NodrakorId \u2014 family muvipro (KlikxxiEngine, gmr-* classes).",
-    "fileSize": 16703,
+    "fileSize": 19025,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -261,7 +261,7 @@
     ],
     "iconUrl": "https://web.kawanfilm21.co/wp-content/uploads/2023/01/cropped-favicon-32x32.png",
     "apiVersion": 1,
-    "fileHash": "sha256-070dfe5145d0045515c3f5c28edd071b21b324cc2a7e874a015e379cc9b85453"
+    "fileHash": "sha256-c4868229c5ba82b8d8628ee62145cca7a78c47e180a1cba06a938fe826b91a5c"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Animasu.cs3",
