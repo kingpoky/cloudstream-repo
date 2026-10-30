@@ -10,5 +10,9 @@ class KlikxxiEnginePlugin : Plugin() {
         // Family muvipro (KlikxxiEngine): 2 turunan live-verified.
         registerMainAPI(KawanFilm())
         registerMainAPI(NodrakorId())
+        // watch.asiastream.cc (pemutar film NodrakorId) tidak dikenal
+        // extractor bawaan APK — tanpa baris ini loadExtractor() melewatinya
+        // diam-diam dan film tampil "tidak ada server". Lihat AsiaStreamExtractor.
+        registerExtractorAPI(AsiaStreamExtractor())
     }
 }

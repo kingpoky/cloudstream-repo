@@ -14,7 +14,12 @@ import com.lagradost.cloudstream3.mainPageOf
  * tab-based terbukti jalan sempurna (beda dari KawanFilm yg tab-nya nol match).
  */
 class NodrakorId : KlikxxiEngine() {
-    override var mainUrl = "https://nodrakor22.space"
+    // Domain pindah nodrakor22.space -> nodrakor22.asia (verifikasi live
+    // 30/10/2026: .space 301 ke .asia, apex nodrakor21.space mati total).
+    // HP yang masih memakai .space ikut terseret redirect untuk katalog,
+    // tapi href hasil search sudah ber-URL .asia — pakai host final supaya
+    // tidak bergantung pada redirect yang bisa dicabut kapan saja.
+    override var mainUrl = "https://nodrakor22.asia"
     override var name = "NodrakorId"
     override val supportedTypes = setOf(TvType.AsianDrama, TvType.Movie, TvType.TvSeries)
 
