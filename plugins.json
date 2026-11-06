@@ -287,7 +287,7 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Dubbindo.cs3",
     "status": 1,
-    "version": 3,
+    "version": 5,
     "name": "Dubbindo",
     "internalName": "Dubbindo",
     "authors": [
@@ -304,7 +304,7 @@
     ],
     "iconUrl": "https://www.dubbindo.site/favicon.ico",
     "apiVersion": 1,
-    "fileHash": "sha256-6dbb3393ab01d322ab5327a0c3692c8b76a0714fca256d26ef90f5a962200148"
+    "fileHash": "sha256-5e26f38b5172037bcdf377fdb7ccf200266839c8d2c25a6e0f680c302142e76c"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Pencuri.cs3",
