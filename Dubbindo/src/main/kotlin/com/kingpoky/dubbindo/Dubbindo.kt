@@ -104,26 +104,39 @@ class Dubbindo : MainAPI() {
     ): Boolean {
         val doc = request(data).document
         val sources = doc.select("video source[src]")
+        // Judul berstatus "video-processing" tidak punya tag <video> sama sekali;
+        // media yang sama disajikan lewat tombol unduh di modal Download.
+        val unduh = doc.select("a.clickdownload").filter { it.attr("href").endsWith(".mp4") }
 
-        if (sources.isEmpty()) return false
+        if (sources.isEmpty() && unduh.isEmpty()) return false
 
         sources.forEach { source ->
             val src = source.attr("src")
             if (src.isBlank()) return@forEach
             val qualityLabel = source.attr("data-quality").ifBlank { "HD" }
-            val qualityNum = Regex("""(\d+)p?""").find(qualityLabel)?.groupValues?.get(1)?.toIntOrNull()
-                ?: Qualities.Unknown.value
-            callback(
-                ExtractorLink(
-                    source = this.name,
-                    name = "${'$'}{this.name} $qualityLabel",
-                    url = src,
-                    referer = mainUrl,
-                    quality = qualityNum,
-                    type = ExtractorLinkType.VIDEO
-                )
-            )
+            emit(src, qualityLabel, callback)
+        }
+
+        // Dipakai HANYA kalau <source> kosong supaya tidak menggandakan server.
+        if (sources.isEmpty()) unduh.forEach { a ->
+            emit(a.attr("href"), a.text().trim().ifBlank { "HD" }, callback)
         }
         return true
+    }
+
+    private fun emit(src: String, qualityLabel: String, callback: (ExtractorLink) -> Unit) {
+        if (src.isBlank()) return
+        val qualityNum = Regex("""(\d+)p?""").find(qualityLabel)?.groupValues?.get(1)?.toIntOrNull()
+            ?: Qualities.Unknown.value
+        callback(
+            ExtractorLink(
+                source = this.name,
+                name = "${this.name} $qualityLabel",
+                url = src,
+                referer = mainUrl,
+                quality = qualityNum,
+                type = ExtractorLinkType.VIDEO
+            )
+        )
     }
 }
