@@ -76,6 +76,11 @@ jobs:
           python3 Moviebox/tests/distribution.py remove-modules "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
           python3 Moviebox/tests/distribution.py snapshot "$GITHUB_WORKSPACE/builds" "$RUNNER_TEMP/distribution-before.json"
 
+      - name: Derive modules to publish from version bumps
+        run: |
+          cd "$GITHUB_WORKSPACE/src"
+          python3 Moviebox/tests/derive_publish.py "$GITHUB_WORKSPACE/builds" >> "$GITHUB_ENV"
+
       - name: Compile Moviebox and the modules being published
         run: |
           cd "$GITHUB_WORKSPACE/src"
