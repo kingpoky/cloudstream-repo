@@ -31,15 +31,6 @@ fun getImageAttr(el: Element): String? {
  * Domain diverifikasi live 20/10/2026: search 20 hasil, 2 sample detail halaman
  * (Naruto Movie 1 & One Piece ep.2) dua-duanya punya <source> MP4 valid,
  * dicek HTTP Range request -> 206 Partial Content, magic bytes ftypmp42 asli.
- *
- * 06/11/2026: host membuang seluruh pola path lama `uvideoweb/movie/*.mp4`
- * (404 untuk 4/4 judul lama) sementara `upload/videos/*_converted.mp4` tetap
- * 206 + ftyp. Rantai search->detail->source TIDAK berubah; yang hilang
- * kontennya. Selain itu judul berstatus "video-processing" (5 dari 12 halaman
- * beranda saat diukur) tidak punya tag <video> sama sekali dan hanya
- * menyajikan media lewat tombol unduh `a.clickdownload` -- karena itu
- * loadLinks punya fallback ke tombol tersebut, dipakai HANYA saat <source>
- * kosong supaya judul normal tidak menggandakan server.
  */
 class Dubbindo : MainAPI() {
     override var mainUrl = "https://www.dubbindo.site"
