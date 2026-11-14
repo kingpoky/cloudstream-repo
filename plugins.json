@@ -309,14 +309,14 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Pencuri.cs3",
     "status": 1,
-    "version": 1,
+    "version": 2,
     "name": "Pencuri",
     "internalName": "Pencuri",
     "authors": [
       "kingpoky"
     ],
     "description": "PencuriMovie \u2014 tema DooPlay (div.ml-item/div.movieplay).",
-    "fileSize": 12407,
+    "fileSize": 13401,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -326,7 +326,7 @@
     ],
     "iconUrl": "https://ww44.pencurimovie.baby/favicon.ico",
     "apiVersion": 1,
-    "fileHash": "sha256-a86177cb62fd181aad33eafee68e6637394a88e99b160ce2ca6086206a559fb9"
+    "fileHash": "sha256-9f98dee95c3f33fab4c0e3771ed41d1c97d6e7a9c55bb4d6619a00d7cc60ddf9"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/Enxapi.cs3",
