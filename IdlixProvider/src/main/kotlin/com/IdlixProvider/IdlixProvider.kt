@@ -11,12 +11,15 @@ import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.nicehttp.RequestBodyTypes
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Interceptor
+import okhttp3.Response
 import kotlinx.coroutines.delay
 import java.util.UUID
 
 class IdlixProvider : MainAPI() {
     override var mainUrl = "https://z2.idlixku.com"
     override var name = "Idlix"
+    private var currentPentosToken: String? = null
     override val hasMainPage = true
     override var lang = "id"
     override val hasDownloadSupport = true
@@ -398,15 +401,81 @@ class IdlixProvider : MainAPI() {
             
             val claimParsed = AppUtils.parseJson<SessionClaimResponse>(claimResText)
             val claim = claimParsed.claim ?: return false
-            
-            // 5. Bypass Majorplay
-            val fakeUrl = "https://e2e.majorplay.net/play?claim=$claim"
-            Majorplay().getUrl(fakeUrl, refererUrl, subtitleCallback, callback)
-            
+            val redeemPath = claimParsed.redeemUrl ?: "/watch/session/redeem"
+            val targetRedeemUrl = if (redeemPath.startsWith("http")) redeemPath else "$mainUrl/api$redeemPath"
+
+            // 5. Handshake Tahap 3: Redeem token Pentos (mode browser)
+            val redeemBodyData = mapOf(
+                "claim" to claim,
+                "mode" to "browser"
+            ).toJson().toRequestBody(jsonMediaType)
+
+            val redeemResText = app.post(
+                url = targetRedeemUrl,
+                headers = headers,
+                cookies = customCookies,
+                requestBody = redeemBodyData
+            ).text
+
+            val redeemParsed = AppUtils.parseJson<PentosRedeemResponse>(redeemResText)
+            val masterConfigUrl = redeemParsed.url ?: return false
+
+            redeemParsed.subtitles?.forEach { sub ->
+                val subUrl = sub.path ?: return@forEach
+                val lang = sub.label ?: sub.lang ?: "Indonesian"
+                subtitleCallback.invoke(newSubtitleFile(lang, subUrl))
+            }
+
+            val token = masterConfigUrl.substringAfter("t=").substringBefore("&")
+            currentPentosToken = token
+
+            val finalPlayableUrl = "$masterConfigUrl&.m3u8"
+
+            callback.invoke(
+                newExtractorLink(
+                    source = name,
+                    name = "Idlix Auto Quality",
+                    url = finalPlayableUrl,
+                    type = ExtractorLinkType.M3U8
+                ) {
+                    this.headers = mapOf(
+                        "Origin" to mainUrl,
+                        "Referer" to "$mainUrl/",
+                        "User-Agent" to "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36"
+                    )
+                    this.referer = "$mainUrl/"
+                    this.quality = Qualities.Unknown.value
+                }
+            )
+
             return true
         } catch (e: Exception) {
             Log.e("adixtream", "Error di loadLinks: ${e.message}")
             return false
+        }
+    }
+
+    override fun getVideoInterceptor(extractorLink: ExtractorLink): Interceptor {
+        return object : Interceptor {
+            override fun intercept(chain: Interceptor.Chain): Response {
+                val req = chain.request()
+                val url = req.url.toString()
+                val token = currentPentosToken
+                if (!token.isNullOrBlank() && url.contains("/v/") && !url.contains("t=")) {
+                    val newUrl = req.url.newBuilder()
+                        .setQueryParameter("t", token)
+                        .setQueryParameter("pm", "browser")
+                        .build()
+                    val newReq = req.newBuilder()
+                        .url(newUrl)
+                        .header("Origin", mainUrl)
+                        .header("Referer", "$mainUrl/")
+                        .header("User-Agent", "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36")
+                        .build()
+                    return chain.proceed(newReq)
+                }
+                return chain.proceed(req)
+            }
         }
     }
 }
@@ -535,4 +604,17 @@ data class SessionClaimResponse(
     @JsonProperty("claim") val claim: String? = null,
     @JsonProperty("redeemUrl") val redeemUrl: String? = null,
     @JsonProperty("videoId") val videoId: String? = null
+)
+
+data class PentosRedeemResponse(
+    @JsonProperty("code") val code: String? = null,
+    @JsonProperty("mode") val mode: String? = null,
+    @JsonProperty("url") val url: String? = null,
+    @JsonProperty("subtitles") val subtitles: List<PentosSubtitle>? = null
+)
+
+data class PentosSubtitle(
+    @JsonProperty("lang") val lang: String? = null,
+    @JsonProperty("label") val label: String? = null,
+    @JsonProperty("path") val path: String? = null
 )
