@@ -118,12 +118,20 @@ class Pencuri : MainAPI() {
 
         if (iframes.isEmpty()) return false
 
+        var found = false
         iframes.forEach { iframe ->
             val src = iframe.attr("data-src")
             if (src.isNotBlank()) {
-                loadExtractor(fixUrl(src), mainUrl, subtitleCallback, callback)
+                val fixed = fixUrl(src)
+                if (fixed.contains("playmogo.com")) {
+                    Playmogo().getUrl(fixed, mainUrl, subtitleCallback, callback)
+                    found = true
+                } else {
+                    loadExtractor(fixed, mainUrl, subtitleCallback, callback)
+                    found = true
+                }
             }
         }
-        return true
+        return found
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class PencuriPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(Pencuri())
+        registerExtractorAPI(Playmogo())
     }
 }
