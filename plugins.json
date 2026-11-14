@@ -24,13 +24,13 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/IdlixProvider.cs3",
     "status": 1,
-    "version": 8,
+    "version": 9,
     "name": "IdlixProvider",
     "internalName": "IdlixProvider",
     "authors": [
       "AdiManu"
     ],
-    "fileSize": 49557,
+    "fileSize": 55494,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -41,7 +41,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://idlixian.com&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-a0a07100a14b0f166357bdcbc45440a5bd8e0f31e07c53cb35b49353575c3ecf"
+    "fileHash": "sha256-2d19969df8383d995d042b060219090420c4c382d197b0414dbd9dc56b12ec1a"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/KisskhProvider.cs3",
