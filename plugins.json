@@ -2,13 +2,13 @@
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/FreeReels.cs3",
     "status": 1,
-    "version": 33,
+    "version": 34,
     "name": "FreeReels",
     "internalName": "FreeReels",
     "authors": [
       "AdiManu"
     ],
-    "fileSize": 37719,
+    "fileSize": 37710,
     "repositoryUrl": "https://github.com/kingpoky/cloudstream-repo",
     "language": "id",
     "tvTypes": [
@@ -19,7 +19,7 @@
     ],
     "iconUrl": "https://free-reels.com/free-reels.png",
     "apiVersion": 1,
-    "fileHash": "sha256-b882673a994e16344c982e8b65c14e2d22824c5ea88ab92ef40c5f867890a690"
+    "fileHash": "sha256-41d6784e994df0916dbfeb1148c8f8e756b9c932fdbe00ce89405d1c8300bcdf"
   },
   {
     "url": "https://raw.githubusercontent.com/kingpoky/cloudstream-repo/builds/IdlixProvider.cs3",
