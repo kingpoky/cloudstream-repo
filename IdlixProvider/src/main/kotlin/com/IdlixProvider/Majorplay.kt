@@ -22,10 +22,11 @@ class Majorplay : ExtractorApi() {
         val claimToken = url.substringAfter("claim=").substringBefore("&")
         if (claimToken.isEmpty()) return
 
-        // Menggunakan domain z2 baru dan User-Agent Android yang terbukti lolos
+        // 17/11/2026: host pindah z2 -> z3 (z2/z1 menghapus route playback).
+        // Jangan dikembalikan ke z2 tanpa menguji /api/watch/session/claim dulu.
         val safeHeaders = mapOf(
-            "Origin" to "https://z2.idlixku.com",
-            "Referer" to "https://z2.idlixku.com/",
+            "Origin" to "https://z3.idlixku.com",
+            "Referer" to "https://z3.idlixku.com/",
             "User-Agent" to "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36"
         )
 
@@ -62,7 +63,7 @@ class Majorplay : ExtractorApi() {
                 type = ExtractorLinkType.M3U8
             ) {
                 this.headers = safeHeaders
-                this.referer = "https://z2.idlixku.com/"
+                this.referer = "https://z3.idlixku.com/"
                 this.quality = Qualities.Unknown.value 
             }
         )

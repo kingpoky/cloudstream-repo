@@ -17,7 +17,11 @@ import kotlinx.coroutines.delay
 import java.util.UUID
 
 class IdlixProvider : MainAPI() {
-    override var mainUrl = "https://z2.idlixku.com"
+    // 17/11/2026: z2 (dan z1) menghapus route playback — `/api/watch/session/claim`
+    // balas 404 generik walau `/api/movies` & play-info tetap 200, jadi HP
+    // berhenti di "no server" padahal katalog tampil normal. z3 masih
+    // menyajikan rantai penuh (claim -> redeem -> master.json).
+    override var mainUrl = "https://z3.idlixku.com"
     override var name = "Idlix"
     private var currentPentosToken: String? = null
     override val hasMainPage = true
