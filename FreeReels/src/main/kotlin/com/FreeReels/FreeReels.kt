@@ -112,7 +112,13 @@ class FreeReels : MainAPI() {
             "x-device-fingerprint" to "Redmi/sky_global/sky:14/UKQ1.231003.002/V816.0.11.0.UMWMIXM:user/release-keys",
             "session-id" to sessionId,
             "app-name" to "com.freereels.app",
-            "app-version" to "2.2.91",
+            // 17/11/2026: server menolak app-version lama dengan
+            // {"code":403,"message":"Permission denied"} di balik HTTP 200.
+            // Diukur satu-variabel: 2.2.91/2.2.95/2.3.5/2.4.9 ditolak,
+            // 2.2.92-2.4.5 diterima. >=2.5.0 membalas body terenkripsi dan
+            // cryptoKey lama tidak membukanya, jadi 2.4.5 adalah batas atas
+            // yang masih plaintext. Jangan naikkan tanpa membongkar kunci baru.
+            "app-version" to "2.4.5",
             "device-id" to deviceId,
             "device-version" to "34",
             "device" to "android",
